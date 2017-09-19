@@ -111,7 +111,7 @@ public class Main
 		mainPanel.add(scroller);
 		frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
 		
-		JButton saveButton = new JButton("Save");
+		JButton saveButton = new JButton("Save");		//Create buttons
 		JButton clearButton = new JButton("Clear");
 		JButton versionButton = new JButton("Version");
 		JButton scrollDownButton = new JButton("Scroll Down");
