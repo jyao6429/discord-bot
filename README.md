@@ -1,7 +1,7 @@
 # discord-bot
 Discord bot in Java that I have been working on
 
-You can create your own bot by going to https://discordapp.com/developers/applications/me and creating a new bot.
+You can create your own bot by going to [My Apps](https://discordapp.com/developers/applications/me) in Discord and creating a new bot.
 
 Create a bot user for it, and then go the this link to add your bot to your server:
 
