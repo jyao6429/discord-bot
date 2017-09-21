@@ -1,5 +1,5 @@
 # discord-bot
-Discord bot in Java that I have been working on
+Hi, I have just started to learn how to program, and this is a little project I have been working on to test out my skills. Any suggestions are appreciated!
 
 You can create your own bot by going to [My Apps](https://discordapp.com/developers/applications/me) in Discord and creating a new bot.
 
