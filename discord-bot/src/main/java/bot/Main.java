@@ -177,7 +177,7 @@ public class Main
 	{
 		public void actionPerformed(ActionEvent ev)
 		{
-			logMessage("BattlEye Version: 1.1.3");
+			logMessage("Bot Version: 1.1.4");
 		}
 	}
 	public class ScrollButtonListener implements ActionListener
