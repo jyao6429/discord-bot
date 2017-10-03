@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bot.Command;
-import bot.Global;
+import bot.ModTools;
 import bot.MusicController;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -31,7 +31,7 @@ public class SkipCommand implements Command
 		Member member = event.getMember();
 		VoiceChannel myChannel = member.getVoiceState().getChannel();
 		List<Member> connectedMembers = null;
-		boolean isMod = Global.isMod(member);
+		boolean isMod = ModTools.isMod(member);
 		boolean skipped = false;
 		int rounded = 0;
 		

@@ -1,7 +1,7 @@
 package commands;
 
 import bot.Command;
-import bot.Global;
+import bot.ModTools;
 import bot.MusicController;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -23,7 +23,7 @@ public class StopCommand implements Command
 	{
 		TextChannel channel = event.getTextChannel();
 		Member member = event.getMember();
-		boolean isMod = Global.isMod(member);
+		boolean isMod = ModTools.isMod(member);
 		if(isMod)
 		{
 			MusicController.stopPlaying(channel);

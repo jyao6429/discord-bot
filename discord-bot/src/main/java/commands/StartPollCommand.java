@@ -2,7 +2,8 @@ package commands;
 
 import java.util.ArrayList;
 import bot.Command;
-import bot.Global;
+import bot.ModTools;
+import bot.PollHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -25,26 +26,26 @@ public class StartPollCommand implements Command
 		Guild guild = event.getGuild();
 		TextChannel channel = event.getTextChannel();
 		Member member = event.getMember();
-		boolean isMod = Global.isMod(member);
+		boolean isMod = ModTools.isMod(member);
 		
 		if(isMod)
 		{
-			if(!Global.isPolling.containsKey(guild) || !Global.isPolling.get(guild))
+			if(!PollHandler.isPolling.containsKey(guild) || !PollHandler.isPolling.get(guild))
 			{
-				Global.isPolling.put(guild, true);
+				PollHandler.isPolling.put(guild, true);
 				
-				if(!Global.poll.containsKey(guild))
+				if(!PollHandler.poll.containsKey(guild))
 				{
-					Global.poll.put(guild, new int[2]);
+					PollHandler.poll.put(guild, new int[2]);
 				}
-				if(!Global.hasVoted.containsKey(guild))
+				if(!PollHandler.hasVoted.containsKey(guild))
 				{
-					Global.hasVoted.put(guild, new ArrayList<Member>());
+					PollHandler.hasVoted.put(guild, new ArrayList<Member>());
 				}
 				
 				channel.sendMessage("Started poll").queue();
 			}
-			else if(Global.isPolling.get(guild))
+			else if(PollHandler.isPolling.get(guild))
 			{
 				channel.sendMessage("There is already a running poll").queue();
 			}

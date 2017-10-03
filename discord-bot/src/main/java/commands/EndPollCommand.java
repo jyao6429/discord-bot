@@ -2,7 +2,8 @@ package commands;
 
 import java.util.ArrayList;
 import bot.Command;
-import bot.Global;
+import bot.ModTools;
+import bot.PollHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -26,20 +27,20 @@ public class EndPollCommand implements Command
 		Member member = event.getMember();
 		TextChannel channel = event.getTextChannel();
 		
-		boolean isMod = Global.isMod(member);
+		boolean isMod = ModTools.isMod(member);
 		
 		if(isMod)
 		{
-			if(Global.isPolling.containsKey(guild) && Global.isPolling.get(guild))
+			if(PollHandler.isPolling.containsKey(guild) && PollHandler.isPolling.get(guild))
 			{
-				int[] pollResults = Global.poll.get(guild);
+				int[] pollResults = PollHandler.poll.get(guild);
 				int yesResults = pollResults[0];
 				int noResults = pollResults[1];
 				
 				channel.sendMessage("Poll results: " + yesResults + " Yes, " + noResults + " No").queue();
-				Global.isPolling.put(guild, false);
-				Global.hasVoted.put(guild, new ArrayList<Member>());
-				Global.poll.put(guild, new int[2]);
+				PollHandler.isPolling.put(guild, false);
+				PollHandler.hasVoted.put(guild, new ArrayList<Member>());
+				PollHandler.poll.put(guild, new int[2]);
 			}
 			else
 			{

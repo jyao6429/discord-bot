@@ -2,7 +2,7 @@ package commands;
 
 import java.util.ArrayList;
 import bot.Command;
-import bot.Global;
+import bot.PollHandler;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -31,10 +31,10 @@ public class VoteCommand implements Command
 		Guild guild = event.getGuild();
 		TextChannel channel = event.getTextChannel();
 		Member member = event.getMember();
-		if(Global.isPolling.containsKey(guild) && Global.isPolling.get(guild))
+		if(PollHandler.isPolling.containsKey(guild) && PollHandler.isPolling.get(guild))
 		{
-			int[] pollStats = Global.poll.get(guild);
-			ArrayList<Member> votedMembers = Global.hasVoted.get(guild);
+			int[] pollStats = PollHandler.poll.get(guild);
+			ArrayList<Member> votedMembers = PollHandler.hasVoted.get(guild);
 			int yesStats;
 			int noStats;
 			
@@ -43,22 +43,22 @@ public class VoteCommand implements Command
 		
 			if(!votedMembers.contains(member))
 			{
-				if(Global.yes.contains(vote))
+				if(PollHandler.yes.contains(vote))
 				{
 					yesStats++;
 					pollStats[0] = yesStats;
 					votedMembers.add(member);
-					Global.poll.put(guild, pollStats);
-					Global.hasVoted.put(guild, votedMembers);
+					PollHandler.poll.put(guild, pollStats);
+					PollHandler.hasVoted.put(guild, votedMembers);
 					channel.sendMessage("Added vote to \"Yes\"").queue();
 				}
-				else if(Global.no.contains(vote))
+				else if(PollHandler.no.contains(vote))
 				{
 					noStats++;
 					pollStats[1] = noStats;
 					votedMembers.add(member);
-					Global.poll.put(guild, pollStats);
-					Global.hasVoted.put(guild, votedMembers);
+					PollHandler.poll.put(guild, pollStats);
+					PollHandler.hasVoted.put(guild, votedMembers);
 					channel.sendMessage("Added vote to \"No\"").queue();
 				}
 				else if(vote.equals("NO_VOTE"))
