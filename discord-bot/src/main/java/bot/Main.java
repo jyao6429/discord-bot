@@ -42,10 +42,10 @@ import youtube.Search;
 
 public class Main
 {
-	JFrame frame;		//GUI instance variables
-	JPanel mainPanel;
-	JPanel sidePanel;
-	public static JTextArea text;
+	private JFrame frame;		//GUI instance variables
+	private JPanel mainPanel;
+	private JPanel sidePanel;
+	private static JTextArea text;
 	private static JDA jda;
 	public static final CommandParser parser = new CommandParser();		//Command stuff
 	public static HashMap<String, Command> commands = new HashMap<String, Command>();
@@ -116,7 +116,7 @@ public class Main
 		JButton versionButton = new JButton("Version");
 		JButton scrollDownButton = new JButton("Scroll Down");
 		
-		sidePanel = new JPanel();
+		sidePanel = new JPanel();			
 		sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
 		
 		saveButton.addActionListener(new SaveButtonListener());
