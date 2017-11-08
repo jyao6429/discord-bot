@@ -8,7 +8,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
@@ -47,10 +46,11 @@ public class Main
 	private JPanel sidePanel;
 	private static JTextArea text;
 	private static JDA jda;
+	private DefaultCaret caret;
+	private JScrollPane scroller;
+	
 	public static final CommandParser parser = new CommandParser();		//Command stuff
 	public static HashMap<String, Command> commands = new HashMap<String, Command>();
-	private DefaultCaret caret;		//More GUI stuff
-	private JScrollPane scroller;
 
 	public static void main(String[] args)
 	{
@@ -116,26 +116,26 @@ public class Main
 		JButton versionButton = new JButton("Version");
 		JButton scrollDownButton = new JButton("Scroll Down");
 		
-		sidePanel = new JPanel();			
-		sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
+		sidePanel = new JPanel();			//New panel for the buttons
+		sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));		//Set box layout so buttons will be vertical
 		
-		saveButton.addActionListener(new SaveButtonListener());
+		saveButton.addActionListener(new SaveButtonListener());			//Add all Listeners to the buttons
 		clearButton.addActionListener(new ClearButtonListener());
 		versionButton.addActionListener(new VersionButtonListener());
 		scrollDownButton.addActionListener(new ScrollButtonListener());
 		
-		sidePanel.add(saveButton);
+		sidePanel.add(saveButton);		//Add the three buttons to the sidePanel
 		sidePanel.add(clearButton);
 		sidePanel.add(versionButton);
 		
-		frame.getContentPane().add(BorderLayout.SOUTH, scrollDownButton);
-		frame.getContentPane().add(BorderLayout.EAST, sidePanel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(660, 340);
-		frame.setVisible(true);
+		frame.getContentPane().add(BorderLayout.SOUTH, scrollDownButton);		//Add the scrollDownButton to the bottom
+		frame.getContentPane().add(BorderLayout.EAST, sidePanel);			//Add the sidePanel to the right
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		//Exits Java program if you close the window
+		frame.setSize(660, 340);		//Set frame dimensions
+		frame.setVisible(true);			//Make it visible
 		
 	}	
-	public class SaveButtonListener implements ActionListener
+	public class SaveButtonListener implements ActionListener		
 	{
 		public void actionPerformed(ActionEvent ev)
 		{
@@ -159,7 +159,7 @@ public class Main
 				}
 				pWriter.close();
 			}
-			catch(IOException ex)
+			catch(Exception ex)
 			{
 				System.out.println("Could not save");
 				ex.printStackTrace();
