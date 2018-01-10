@@ -22,14 +22,14 @@ public class BotListener extends ListenerAdapter
         Message message = event.getMessage();           //The message that was received.
 
 
-        String msg = message.getContent();              //This returns a human readable version of the Message. Similar to
+        String msg = message.getContentDisplay();              //This returns a human readable version of the Message. Similar to
                                                         // what you would see in the client.
 
         boolean bot = author.isBot();                    //This boolean is useful to determine if the User that
                                                         // sent the Message is a BOT or not!
         if(msg.startsWith("!") && bot != true)
         {
-        	Main.handleCommand(Main.parser.parse(event.getMessage().getContent().toLowerCase(), event));
+        	Main.handleCommand(Main.parser.parse(event.getMessage().getContentDisplay().toLowerCase(), event));
         }
         if (event.isFromType(ChannelType.TEXT))         //If this message was sent to a Guild TextChannel
         {

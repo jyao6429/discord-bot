@@ -22,7 +22,7 @@ public class PlayCommand implements Command
 	{
 		TextChannel channel = event.getTextChannel();
 		
-		String[] command = event.getMessage().getContent().split(" ");
+		String[] command = event.getMessage().getContentDisplay().split(" ");
 			
 		if(command.length == 1)
 		{

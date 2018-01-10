@@ -27,6 +27,7 @@ public class HelpCommand implements Command
 				+ "!play [URL] (or) [search query] = play music in the Music voice channel by giving a URL or keywords for the bot to search on YouTube (URL supports: Youtube, SoundCloud, BandCamp, Vimeo, Twitch)\n"
 				+ "!skip = skips the current song if enough votes are given\n"
 				+ "!stop = stops the music and disconnects the bot (Mods only)\n"
+				+ "!lmgtfy [search query] = returns a LMGTFY link with the search parameter because we are lazy\n"
 				+ "!startpoll = starts a new poll (Mods only) (Only one running poll per server)\n"
 				+ "!vote [yes or no] = vote in a running poll\n"
 				+ "!endpoll or !stoppoll = stops the current running poll and displays the results").queue();
