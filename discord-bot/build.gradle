@@ -3,7 +3,7 @@ plugins
 	id 'java-library'
 	id 'java'
  	id 'application'
-	id 'com.github.johnrengelman.shadow' version '2.0.1'
+	id 'com.github.johnrengelman.shadow' version '2.0.2'
 }
 
 mainClassName = 'bot.Main'
@@ -24,8 +24,8 @@ dependencies
     implementation 'com.google.guava:guava:21.0'
     testImplementation 'junit:junit:4.12'
     
-    compile 'net.dv8tion:JDA:3.5.0_327'
-    compile 'com.sedmelluq:lavaplayer:1.2.45'
+    compile 'net.dv8tion:JDA:3.5.1_347'
+    compile 'com.sedmelluq:lavaplayer:1.2.56'
     compile 'com.google.api-client:google-api-client:1.22.0'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.22.0'
     compile 'com.google.apis:google-api-services-youtube:v3-rev183-1.22.0'
