@@ -8,6 +8,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
@@ -26,6 +27,7 @@ import commands.BlockCommand;
 import commands.EndPollCommand;
 import commands.HelpCommand;
 import commands.KickCommand;
+import commands.LMGTFYCommand;
 import commands.PingCommand;
 import commands.PlayCommand;
 import commands.RollCommand;
@@ -60,7 +62,7 @@ public class Main
 			String botToken = r.readLine();						//Set the string botToken as the token in the file
 			jda = new JDABuilder(AccountType.BOT)				//Initialize the bot
 					.addEventListener(new BotListener())		//Adds the bot listener so it can respond when messages are sent
-					.setGame(Game.of("Pwning Cheaters"))		//Set the "game" that the bot will display as what it is "playing"
+					.setGame(Game.playing("!help"))				//Set the "game" that the bot will display as what it is "playing"
 					.setToken(botToken)							//Set the bot token
 					.buildBlocking();
 			jda.setAutoReconnect(true);		//Set it to reconnect if disconnected from Internet
@@ -82,6 +84,7 @@ public class Main
 		commands.put("vote", new VoteCommand());
 		commands.put("endpoll", new EndPollCommand());
 		commands.put("stoppoll", new EndPollCommand());
+		commands.put("lmgtfy", new LMGTFYCommand());
 		
 		Main bot = new Main();		//Create a new Main object and call the go() method
 		bot.go();
@@ -135,17 +138,17 @@ public class Main
 		frame.setVisible(true);			//Make it visible
 		
 	}	
-	public class SaveButtonListener implements ActionListener		
+	public class SaveButtonListener implements ActionListener		//When Save button is clicked
 	{
 		public void actionPerformed(ActionEvent ev)
 		{
-			File file;
-			JFileChooser fileSave = new JFileChooser();
-			fileSave.showSaveDialog(frame);
-			file = fileSave.getSelectedFile();
-			
 			try
 			{
+				File file;
+				JFileChooser fileSave = new JFileChooser();
+				fileSave.showSaveDialog(frame);
+				file = fileSave.getSelectedFile();
+				
 				BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 				PrintWriter pWriter = new PrintWriter(writer);
 				
@@ -159,9 +162,14 @@ public class Main
 				}
 				pWriter.close();
 			}
-			catch(Exception ex)
+			catch(IOException ex)
 			{
 				System.out.println("Could not save");
+				ex.printStackTrace();
+			}
+			catch(Exception ex)
+			{
+				System.out.println("Other error");
 				ex.printStackTrace();
 			}
 		}
@@ -177,7 +185,7 @@ public class Main
 	{
 		public void actionPerformed(ActionEvent ev)
 		{
-			logMessage("Bot Version: 1.1.4");
+			logMessage("Bot Version: 1.1.5");
 		}
 	}
 	public class ScrollButtonListener implements ActionListener
