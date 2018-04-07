@@ -2,6 +2,7 @@ package commands;
 
 import java.util.List;
 import bot.Command;
+import bot.ModTools;
 import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.Guild;
@@ -28,6 +29,12 @@ public class KickCommand implements Command
 	{
 		MessageChannel channel = event.getChannel();
 		Message message = event.getMessage();
+		Member sender = event.getMember();
+		if (!ModTools.isMod(sender))
+		{
+			channel.sendMessage("Must be a mod to use this command!").queue();
+			return;
+		}
 		if (message.isFromType(ChannelType.TEXT))
         {
             //If no users are provided, we can't kick anyone!
