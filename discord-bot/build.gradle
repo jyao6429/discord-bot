@@ -8,7 +8,7 @@ plugins
 
 mainClassName = 'bot.Main'
 
-version '1.1.4'
+version '1.1.5'
 
 sourceCompatibility = 1.8
 
@@ -24,11 +24,11 @@ dependencies
     implementation 'com.google.guava:guava:21.0'
     testImplementation 'junit:junit:4.12'
     
-    compile 'net.dv8tion:JDA:3.5.1_347'
-    compile 'com.sedmelluq:lavaplayer:1.2.56'
-    compile 'com.google.api-client:google-api-client:1.22.0'
-    compile 'com.google.oauth-client:google-oauth-client-jetty:1.22.0'
-    compile 'com.google.apis:google-api-services-youtube:v3-rev183-1.22.0'
+    compile 'net.dv8tion:JDA:3.6.0_354'
+    compile 'com.sedmelluq:lavaplayer:1.2.62'
+    compile 'com.google.api-client:google-api-client:1.23.0'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    compile 'com.google.apis:google-api-services-youtube:v3-rev193-1.23.0'
     compile 'org.slf4j:slf4j-jdk14:1.7.25'
 }
 
