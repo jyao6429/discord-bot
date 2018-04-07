@@ -5,7 +5,7 @@ import net.dv8tion.jda.core.events.message.*;
 
 public class PingCommand implements Command
 {
-	
+
 	private final String HELP = "USAGE: !ping";
 
 	@Override
@@ -31,5 +31,4 @@ public class PingCommand implements Command
 	{
 		return;
 	}
-
 }

@@ -7,7 +7,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class LMGTFYCommand implements Command
 {
-	
+
 	private final String HELP = "USAGE: !lmgtfy";
 
 	@Override
@@ -22,15 +22,15 @@ public class LMGTFYCommand implements Command
 		TextChannel channel = event.getTextChannel();
 		String msg = event.getMessage().getContentDisplay();
 		String[] splitMsg = msg.split(" ", 2);
-		
+
 		String url = splitMsg[1];
 		String encodedUrl;
-		try
+		try		// Get the message and encode it as a URL
 		{
 			encodedUrl = URLEncoder.encode(url, "UTF-8");
-			channel.sendMessage("http://lmgtfy.com/?q=" + encodedUrl).queue();
+			channel.sendMessage("http://lmgtfy.com/?q=" + encodedUrl).queue();	// Give the link back with argument as search query
 		}
-		catch(Exception ex)
+		catch (Exception ex)
 		{
 			ex.printStackTrace();
 			channel.sendMessage("Error").queue();

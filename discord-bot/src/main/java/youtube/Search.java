@@ -1,3 +1,5 @@
+// Used example from Youtube Data API
+
 package youtube;
 
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -124,25 +126,6 @@ public class Search
         return idCarry;
 
     }
-
-    /*
-     * Prompt the user to enter a query term and return the user-specified term.
-     */
-/*    private static String getInputQuery() throws IOException {
-
-        String inputQuery = "";
-
-        System.out.print("Please enter a search term: ");
-        BufferedReader bReader = new BufferedReader(new InputStreamReader(System.in));
-        inputQuery = bReader.readLine();
-
-        if (inputQuery.length() < 1) {
-            // Use the string "YouTube Developers Live" as a default.
-            inputQuery = "YouTube Developers Live";
-        }
-        return inputQuery;
-    }	*/
-
     /*
      * Prints out all results in the Iterator. For each result, print the
      * title, video ID, and thumbnail.

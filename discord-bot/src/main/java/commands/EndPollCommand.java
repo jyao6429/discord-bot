@@ -11,7 +11,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class EndPollCommand implements Command
 {
-	
+
 	private final String HELP = "USAGE: !endpoll";
 
 	@Override
@@ -27,17 +27,21 @@ public class EndPollCommand implements Command
 		Member member = event.getMember();
 		TextChannel channel = event.getTextChannel();
 		
+		// First check if the user is a mod
 		boolean isMod = ModTools.isMod(member);
-		
-		if(isMod)
+		if (isMod)
 		{
-			if(PollHandler.isPolling.containsKey(guild) && PollHandler.isPolling.get(guild))
+			if (PollHandler.isPolling.containsKey(guild) && PollHandler.isPolling.get(guild))	//Checks if there is a poll running
 			{
+				// Get the results
 				int[] pollResults = PollHandler.poll.get(guild);
 				int yesResults = pollResults[0];
 				int noResults = pollResults[1];
-				
+
+				// Send the results
 				channel.sendMessage("Poll results: " + yesResults + " Yes, " + noResults + " No").queue();
+				
+				// Reset the poll status for that guild
 				PollHandler.isPolling.put(guild, false);
 				PollHandler.hasVoted.put(guild, new ArrayList<Member>());
 				PollHandler.poll.put(guild, new int[2]);

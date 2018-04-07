@@ -9,7 +9,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class StopCommand implements Command
 {
-	
+
 	private final String HELP = "USAGE: !stop";
 
 	@Override
@@ -23,9 +23,12 @@ public class StopCommand implements Command
 	{
 		TextChannel channel = event.getTextChannel();
 		Member member = event.getMember();
+		
+		// Makes sure user is a mod
 		boolean isMod = ModTools.isMod(member);
-		if(isMod)
+		if (isMod)
 		{
+			// Stops the music
 			MusicController.stopPlaying(channel);
 			channel.sendMessage("Stopped music").queue();
 		}
