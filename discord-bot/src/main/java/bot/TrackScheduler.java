@@ -7,6 +7,9 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 
+import net.dv8tion.jda.core.entities.Guild;
+import net.dv8tion.jda.core.entities.TextChannel;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -18,15 +21,17 @@ public class TrackScheduler extends AudioEventAdapter
 {
 	private final AudioPlayer player;
 	private final BlockingQueue<AudioTrack> queue;
+	private final Guild guild;
 
 	/**
 	 * @param player
 	 *            The audio player this scheduler uses
 	 */
-	public TrackScheduler(AudioPlayer player)
+	public TrackScheduler(AudioPlayer player, Guild guild)
 	{
 		this.player = player;
 		this.queue = new LinkedBlockingQueue<>();
+		this.guild = guild;
 	}
 	/**
 	 * Add the next track to queue or play right away if nothing is in the queue.
@@ -57,6 +62,15 @@ public class TrackScheduler extends AudioEventAdapter
 		// player.
 		player.startTrack(queue.poll(), false);
 	}
+	
+	@Override
+	public void onTrackStart(AudioPlayer player, AudioTrack track)
+	{
+		// Print the name of the song that starts playing in the #music channel
+		TextChannel channel = guild.getTextChannelsByName("music", true).get(0);
+		channel.sendMessage("Now playing: " + track.getInfo().title).queue();
+	}
+	
 	@Override
 	public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason)
 	{

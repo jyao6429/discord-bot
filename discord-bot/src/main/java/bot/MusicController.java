@@ -1,4 +1,4 @@
-// Used example from Lavaplayer
+// Used example from Lavaplayer Demo
 
 package bot;
 
@@ -37,7 +37,7 @@ public class MusicController
 
 		if (musicManager == null)
 		{
-			musicManager = new GuildMusicManager(playerManager);
+			musicManager = new GuildMusicManager(playerManager, guild);
 			musicManagers.put(guildId, musicManager);
 		}
 
@@ -49,13 +49,14 @@ public class MusicController
 	{
 		GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
 		member = event.getMember();
+		
 
 		playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler()
 		{
 			@Override
 			public void trackLoaded(AudioTrack track)
 			{
-				channel.sendMessage("Adding to queue " + track.getInfo().title).queue();	//Add the song to the queue
+				channel.sendMessage("Adding to queue: " + track.getInfo().title).queue();	//Add the song to the queue
 
 				play(channel.getGuild(), musicManager, track);
 			}
@@ -63,17 +64,12 @@ public class MusicController
 			@Override
 			public void playlistLoaded(AudioPlaylist playlist)	// Add a playlist the the queue
 			{
-				AudioTrack firstTrack = playlist.getSelectedTrack();
-
-				if (firstTrack == null)
+				channel.sendMessage("Adding playlist to queue: " + playlist.getName() + " (" + playlist.getTracks().size() + " songs)").queue();
+				
+				for(AudioTrack track : playlist.getTracks())		// Add all the tracks
 				{
-					firstTrack = playlist.getTracks().get(0);
+					play(channel.getGuild(), musicManager, track);
 				}
-
-				channel.sendMessage("Adding to queue " + firstTrack.getInfo().title + " (first track of playlist "
-						+ playlist.getName() + ")").queue();
-
-				play(channel.getGuild(), musicManager, firstTrack);
 			}
 
 			@Override
@@ -105,7 +101,7 @@ public class MusicController
 		}
 		else if (!audioManager.isConnected() && !audioManager.isAttemptingToConnect())	// Otherwise connect to the "Music" channel
 		{
-			VoiceChannel musicChannel = guild.getVoiceChannelsByName("Music", true).get(0);
+			VoiceChannel musicChannel = guild.getVoiceChannelsByName("music", true).get(0);
 			audioManager.openAudioConnection(musicChannel);
 		}
 	}
@@ -113,14 +109,13 @@ public class MusicController
 	public static void skipTrack(TextChannel channel)	// Skip the current track and play the next one
 	{
 		GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
-		musicManager.scheduler.nextTrack();
-
 		channel.sendMessage("Skipped to next track.").queue();
+		musicManager.scheduler.nextTrack();
 	}
 	public static void stopPlaying(TextChannel channel)		// Reset everything and disconnect
 	{
-		GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
 		Guild guild = channel.getGuild();
+		GuildMusicManager musicManager = getGuildAudioPlayer(guild);
 		musicManager.scheduler.clearQueue();
 		guild.getAudioManager().closeAudioConnection();
 	}
