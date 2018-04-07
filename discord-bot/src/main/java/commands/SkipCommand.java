@@ -13,7 +13,7 @@ import net.dv8tion.jda.core.events.message.*;
 
 public class SkipCommand implements Command
 {
-	
+
 	private final String HELP = "USAGE: !skip";
 	private static int numOfSkips = 0;
 	private static ArrayList<Member> skips = new ArrayList<Member>();
@@ -27,46 +27,47 @@ public class SkipCommand implements Command
 	@Override
 	public void action(String[] args, MessageReceivedEvent event)
 	{
+		// Get all the channels
 		TextChannel channel = event.getTextChannel();
 		Member member = event.getMember();
 		VoiceChannel myChannel = member.getVoiceState().getChannel();
+		
 		List<Member> connectedMembers = null;
 		boolean isMod = ModTools.isMod(member);
 		boolean skipped = false;
 		int rounded = 0;
-		
+
 		try
 		{
-			connectedMembers = myChannel.getMembers();
+			connectedMembers = myChannel.getMembers();	// Get all the members connected in the voice channel
 		}
-		catch(Exception ex)
+		catch (Exception ex)
 		{
 			ex.printStackTrace();
 		}
-		if(connectedMembers != null)
+		if (connectedMembers != null)	// If the voice channel is not empty, require 80% of the members to vote to skip before skipping
 		{
 			int numOfMembers = connectedMembers.size() - 1;
 			double eightyPercent = numOfMembers * .8;
 			rounded = (int) Math.ceil(eightyPercent);
 		}
-		if(skips.contains(member))
+		if (skips.contains(member))	// Checks if the user has skipped before
 		{
 			skipped = true;
 		}
-
-		if(isMod)
+		if (isMod)	// If a mod calls the command, it will automatically skip
 		{
 			MusicController.skipTrack(channel);
 		}
-		else if(skipped)
+		else if (skipped)	// Can only skip once!
 		{
 			channel.sendMessage("You have already skipped").queue();
 		}
-		else if(numOfSkips < rounded)
+		else if (numOfSkips < rounded)		// Checks if the amount of skips needed is reached, then reset if skipped a song
 		{
 			skips.add(member);
 			numOfSkips++;
-			if(numOfSkips == rounded)
+			if (numOfSkips == rounded)
 			{
 				MusicController.skipTrack(channel);
 				numOfSkips = 0;
@@ -81,7 +82,7 @@ public class SkipCommand implements Command
 		{
 			channel.sendMessage("Error skipping").queue();
 		}
-		
+
 	}
 
 	@Override

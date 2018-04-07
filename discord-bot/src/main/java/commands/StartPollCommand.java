@@ -11,7 +11,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class StartPollCommand implements Command
 {
-	
+
 	private final String HELP = "USAGE: !startpoll";
 
 	@Override
@@ -26,26 +26,28 @@ public class StartPollCommand implements Command
 		Guild guild = event.getGuild();
 		TextChannel channel = event.getTextChannel();
 		Member member = event.getMember();
-		boolean isMod = ModTools.isMod(member);
 		
-		if(isMod)
+		// Checks if user is a mod
+		boolean isMod = ModTools.isMod(member);
+		if (isMod)
 		{
-			if(!PollHandler.isPolling.containsKey(guild) || !PollHandler.isPolling.get(guild))
+			if (!PollHandler.isPolling.containsKey(guild) || !PollHandler.isPolling.get(guild))	// Makes sure no poll is currently running
 			{
-				PollHandler.isPolling.put(guild, true);
-				
-				if(!PollHandler.poll.containsKey(guild))
+				PollHandler.isPolling.put(guild, true);		// Now the poll is running
+
+				// Create indexes for the Guild if it does not already exist
+				if (!PollHandler.poll.containsKey(guild))
 				{
 					PollHandler.poll.put(guild, new int[2]);
 				}
-				if(!PollHandler.hasVoted.containsKey(guild))
+				if (!PollHandler.hasVoted.containsKey(guild))
 				{
 					PollHandler.hasVoted.put(guild, new ArrayList<Member>());
 				}
-				
+
 				channel.sendMessage("Started poll").queue();
 			}
-			else if(PollHandler.isPolling.get(guild))
+			else if (PollHandler.isPolling.get(guild))
 			{
 				channel.sendMessage("There is already a running poll").queue();
 			}

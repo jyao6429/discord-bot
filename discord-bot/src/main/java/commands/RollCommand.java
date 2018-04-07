@@ -1,3 +1,5 @@
+// Used example from JDA
+
 package commands;
 
 import java.util.Random;
@@ -8,7 +10,7 @@ import net.dv8tion.jda.core.events.message.*;
 
 public class RollCommand implements Command
 {
-	
+
 	private final String HELP = "USAGE: !roll";
 
 	@Override
@@ -22,14 +24,17 @@ public class RollCommand implements Command
 	{
 		MessageChannel channel = event.getChannel();
 		Random rand = new Random();
-        int roll = rand.nextInt(6) + 1; //This results in 1 - 6 (instead of 0 - 5)
-        channel.sendMessage("Your roll: " + roll).queue(sentMessage ->  //This is called a lambda statement. If you don't know
-        {                                                               // what they are or how they work, try google!
-            if (roll < 3)
-            {
-                channel.sendMessage("The roll for messageId: " + sentMessage.getId() + " wasn't very good... Must be bad luck!\n").queue();
-            }
-        });
+		int roll = rand.nextInt(6) + 1; // This results in 1 - 6 (instead of 0 - 5)
+		channel.sendMessage("Your roll: " + roll).queue(sentMessage -> // This is called a lambda statement. If you
+																		// don't know
+		{ // what they are or how they work, try google!
+			if (roll < 3)
+			{
+				channel.sendMessage(
+						"The roll for messageId: " + sentMessage.getId() + " wasn't very good... Must be bad luck!\n")
+						.queue();
+			}
+		});
 	}
 
 	@Override
