@@ -34,7 +34,6 @@ public class SkipCommand implements Command
 		
 		List<Member> connectedMembers = null;
 		boolean isMod = ModTools.isMod(member);
-		boolean skipped = false;
 		int rounded = 0;
 
 		try
@@ -44,45 +43,45 @@ public class SkipCommand implements Command
 		catch (Exception ex)
 		{
 			ex.printStackTrace();
+			channel.sendMessage("You are not in a channel!").queue();
+			return;
 		}
 		if (connectedMembers != null)	// If the voice channel is not empty, require 80% of the members to vote to skip before skipping
 		{
 			int numOfMembers = connectedMembers.size() - 1;
 			double eightyPercent = numOfMembers * .8;
 			rounded = (int) Math.ceil(eightyPercent);
-		}
-		if (skips.contains(member))	// Checks if the user has skipped before
-		{
-			skipped = true;
-		}
-		if (isMod)	// If a mod calls the command, it will automatically skip
-		{
-			MusicController.skipTrack(channel);
-		}
-		else if (skipped)	// Can only skip once!
-		{
-			channel.sendMessage("You have already skipped").queue();
-		}
-		else if (numOfSkips < rounded)		// Checks if the amount of skips needed is reached, then reset if skipped a song
-		{
-			skips.add(member);
-			numOfSkips++;
-			if (numOfSkips == rounded)
+			
+			if (skips.contains(member))	// Checks if the user has skipped before
+			{
+				channel.sendMessage("You have already skipped").queue();
+			}
+			else if (isMod)	// If a mod calls the command, it will automatically skip
 			{
 				MusicController.skipTrack(channel);
 				numOfSkips = 0;
 				skips.clear();
 			}
+			else if (numOfSkips < rounded)		// Checks if the amount of skips needed is reached, then reset if skipped a song
+			{
+				skips.add(member);
+				numOfSkips++;
+				if (numOfSkips == rounded)
+				{
+					MusicController.skipTrack(channel);
+					numOfSkips = 0;
+					skips.clear();
+				}
+				else
+				{
+					channel.sendMessage("Need " + (rounded - numOfSkips) + " more skips").queue();
+				}
+			}
 			else
 			{
-				channel.sendMessage("Need " + (rounded - numOfSkips) + " more skips").queue();
+				channel.sendMessage("Error skipping").queue();
 			}
 		}
-		else
-		{
-			channel.sendMessage("Error skipping").queue();
-		}
-
 	}
 
 	@Override
