@@ -24,8 +24,8 @@ dependencies
     implementation 'com.google.guava:guava:21.0'
     testImplementation 'junit:junit:4.12'
     
-    compile 'net.dv8tion:JDA:3.6.0_354'
-    compile 'com.sedmelluq:lavaplayer:1.2.62'
+    compile 'net.dv8tion:JDA:3.6.0_367'
+    compile 'com.sedmelluq:lavaplayer:1.2.63'
     compile 'com.google.api-client:google-api-client:1.23.0'
     compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
     compile 'com.google.apis:google-api-services-youtube:v3-rev193-1.23.0'
