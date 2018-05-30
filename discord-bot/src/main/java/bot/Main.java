@@ -23,18 +23,7 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.DefaultCaret;
 
-import commands.BlockCommand;
-import commands.EndPollCommand;
-import commands.HelpCommand;
-import commands.KickCommand;
-import commands.LMGTFYCommand;
-import commands.PingCommand;
-import commands.PlayCommand;
-import commands.RollCommand;
-import commands.SkipCommand;
-import commands.StartPollCommand;
-import commands.StopCommand;
-import commands.VoteCommand;
+import commands.*;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -62,8 +51,7 @@ public class Main
 																				// computer named "bot.key"
 			String botToken = r.readLine(); // Set the string botToken as the token in the file
 			jda = new JDABuilder(AccountType.BOT) // Initialize the bot
-					.addEventListener(new BotListener()) // Adds the bot listener so it can respond when messages are
-															// sent
+					.addEventListener(new BotListener()) // Adds the bot listener so it can respond when messages are sent
 					.setGame(Game.playing("!help")) // Set the "game" that the bot will display as what it is "playing"
 					.setToken(botToken) // Set the bot token
 					.buildBlocking();
@@ -87,6 +75,8 @@ public class Main
 		commands.put("endpoll", new EndPollCommand());
 		commands.put("stoppoll", new EndPollCommand());
 		commands.put("lmgtfy", new LMGTFYCommand());
+		commands.put("resume", new ResumeCommand());
+		commands.put("pause", new PauseCommand());
 
 		Main bot = new Main(); // Create a new Main object and call the go() method
 		bot.go();
@@ -109,7 +99,7 @@ public class Main
 		scroller = new JScrollPane(text); // New scroll pane, so that the text box can scroll
 		scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS); // Always have a vertical
 																							// scrollbar
-		scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); // Never have a horizonal
+		scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); // Never have a horizontal
 																								// scrollbar
 		caret = (DefaultCaret) text.getCaret(); // Initialize the DefaultCaret and set it so that it auto-scrolls down
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
@@ -192,7 +182,7 @@ public class Main
 	{
 		public void actionPerformed(ActionEvent ev)
 		{
-			logMessage("Bot Version: 1.1.5");
+			logMessage("Bot Version: 1.1.6");
 		}
 	}
 	public class ScrollButtonListener implements ActionListener // Send the scrollbar to the bottom when clicked

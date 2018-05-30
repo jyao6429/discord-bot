@@ -81,6 +81,20 @@ public class TrackScheduler extends AudioEventAdapter
 			nextTrack();
 		}
 	}
+	
+	@Override
+	public void onPlayerPause(AudioPlayer player)	//Send a message when music is paused
+	{
+		TextChannel channel = guild.getTextChannelsByName("music", true).get(0);
+		channel.sendMessage("Music paused").queue();
+	}
+	
+	@Override
+	public void onPlayerResume(AudioPlayer player)	//Send a message when music is resumed
+	{
+		TextChannel channel = guild.getTextChannelsByName("music", true).get(0);
+		channel.sendMessage("Music resumed").queue();
+	}
 	public void clearQueue()
 	{
 		queue.clear();

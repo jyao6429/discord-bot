@@ -27,7 +27,9 @@ public class HelpCommand implements Command
 				+ "!lmgtfy [search query] = returns a LMGTFY link with the search parameter because we are lazy\n"
 				+ "!startpoll = starts a new poll (Mods only) (Only one running poll per server)\n"
 				+ "!vote [yes or no] = vote in a running poll\n"
-				+ "!endpoll or !stoppoll = stops the current running poll and displays the results").queue();
+				+ "!endpoll or !stoppoll = stops the current running poll and displays the results\n"
+				+ "!pause = pauses music that is playing\n"
+				+ "!resume = resumes music that is paused").queue();
 	}
 
 	@Override

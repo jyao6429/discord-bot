@@ -109,7 +109,7 @@ public class MusicController
 	public static void skipTrack(TextChannel channel)	// Skip the current track and play the next one
 	{
 		GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
-		channel.sendMessage("Skipped to next track.").queue();
+		channel.sendMessage("Skipped to next track").queue();
 		musicManager.scheduler.nextTrack();
 	}
 	public static void stopPlaying(TextChannel channel)		// Reset everything and disconnect
@@ -118,5 +118,35 @@ public class MusicController
 		GuildMusicManager musicManager = getGuildAudioPlayer(guild);
 		musicManager.scheduler.clearQueue();
 		guild.getAudioManager().closeAudioConnection();
+	}
+	public static void resume(TextChannel channel)
+	{
+		GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
+		boolean isPaused = musicManager.player.isPaused();
+		
+		if(isPaused)
+		{
+			musicManager.player.setPaused(false);
+			//channel.sendMessage("Resumed music").queue();
+		}
+		else
+		{
+			channel.sendMessage("Already playing").queue();
+		}
+	}
+	public static void pause(TextChannel channel)
+	{
+		GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
+		boolean isPaused = musicManager.player.isPaused();
+		
+		if(!isPaused)
+		{
+			musicManager.player.setPaused(true);
+			//channel.sendMessage("Paused music").queue();
+		}
+		else
+		{
+			channel.sendMessage("Already paused").queue();
+		}
 	}
 }
