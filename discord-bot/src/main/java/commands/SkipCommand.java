@@ -42,7 +42,6 @@ public class SkipCommand implements Command
 		}
 		catch (Exception ex)
 		{
-			ex.printStackTrace();
 			channel.sendMessage("You are not in a channel!").queue();
 			return;
 		}
