@@ -2,6 +2,8 @@ package commands;
 
 import bot.Command;
 import bot.MusicController;
+import net.dv8tion.jda.core.entities.ChannelType;
+import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.*;
 import youtube.Search;
@@ -20,6 +22,13 @@ public class PlayCommand implements Command
 	@Override
 	public void action(String[] args, MessageReceivedEvent event)
 	{
+		if(!event.isFromType(ChannelType.TEXT))
+		{
+			MessageChannel otherChannel = event.getChannel();
+			otherChannel.sendMessage("You must use this in a server!").queue();
+			return;
+		}
+		
 		TextChannel channel = event.getTextChannel();
 		String[] command = event.getMessage().getContentDisplay().split(" ");
 		

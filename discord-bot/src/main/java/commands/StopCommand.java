@@ -3,7 +3,9 @@ package commands;
 import bot.Command;
 import bot.ModTools;
 import bot.MusicController;
+import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -21,6 +23,13 @@ public class StopCommand implements Command
 	@Override
 	public void action(String[] args, MessageReceivedEvent event)
 	{
+		if(!event.isFromType(ChannelType.TEXT))
+		{
+			MessageChannel otherChannel = event.getChannel();
+			otherChannel.sendMessage("You must use this in a server!").queue();
+			return;
+		}
+		
 		TextChannel channel = event.getTextChannel();
 		Member member = event.getMember();
 		

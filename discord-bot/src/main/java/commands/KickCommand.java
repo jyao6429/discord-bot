@@ -31,6 +31,12 @@ public class KickCommand implements Command
 		MessageChannel channel = event.getChannel();
 		Message message = event.getMessage();
 		Member sender = event.getMember();
+		
+		if(event.isFromType(ChannelType.PRIVATE))
+		{
+			channel.sendMessage("Aren't you silly?").queue();
+			return;
+		}
 
 		if (!ModTools.isMod(sender)) // Checks if user is a mod
 		{

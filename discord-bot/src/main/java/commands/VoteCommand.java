@@ -3,8 +3,10 @@ package commands;
 import java.util.ArrayList;
 import bot.Command;
 import bot.PollHandler;
+import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
+import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -22,6 +24,13 @@ public class VoteCommand implements Command
 	@Override
 	public void action(String[] args, MessageReceivedEvent event)
 	{
+		if(!event.isFromType(ChannelType.TEXT))
+		{
+			MessageChannel otherChannel = event.getChannel();
+			otherChannel.sendMessage("You must use this in a server!").queue();
+			return;
+		}
+		
 		String vote = "NO_VOTE";
 		if (args.length != 0)	// Converts the first argument to lowercases
 		{

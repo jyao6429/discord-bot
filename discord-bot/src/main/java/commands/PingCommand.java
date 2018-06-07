@@ -17,7 +17,7 @@ public class PingCommand implements Command
 	@Override
 	public void action(String[] args, MessageReceivedEvent event)
 	{
-		event.getTextChannel().sendMessage("PONG!").queue();
+			event.getChannel().sendMessage("PONG!").queue();
 	}
 
 	@Override

@@ -53,9 +53,8 @@ public class HelpCommand implements Command
 	{
 		// Print all channel commands
 		User sender = event.getAuthor();
-		ChannelType type = event.getChannelType();
 
-		if(!type.equals(ChannelType.PRIVATE))
+		if (event.isFromType(ChannelType.TEXT))
 		{
 			TextChannel channel = event.getTextChannel();
 
@@ -64,7 +63,7 @@ public class HelpCommand implements Command
 							(success) -> channel.sendMessage(sender.getAsMention() + " Sent to you in a DM!").queue(), 	// If it succeeds, then mention the user in the TextChannel that the info was sent in a PM
 							(failure) -> channel.sendMessage(embedded).queue()));										// If it fails (ie. user doesn't allow PMs), then just directly send the info in the TextChannel
 		}
-		else
+		else if (event.isFromType(ChannelType.PRIVATE))
 		{
 			event.getPrivateChannel().sendMessage(embedded).queue();	// Same, except now it's if the command was sent in a PM, so no need for the success/failures
 		}

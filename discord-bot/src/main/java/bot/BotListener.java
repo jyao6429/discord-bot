@@ -69,8 +69,6 @@ public class BotListener extends ListenerAdapter
 		else if (event.isFromType(ChannelType.PRIVATE)) // If this message was sent to a PrivateChannel
 		{
 			// The message was sent in a PrivateChannel.
-			// In this example we don't directly use the privateChannel, however, be sure,
-			// there are uses for it!
 
 			String log = String.format("[PRIV]<%s>: %s\n", author.getName(), msg);
 			Main.logMessage(log);

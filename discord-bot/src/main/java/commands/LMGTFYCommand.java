@@ -2,7 +2,7 @@ package commands;
 
 import java.net.URLEncoder;
 import bot.Command;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class LMGTFYCommand implements Command
@@ -19,7 +19,7 @@ public class LMGTFYCommand implements Command
 	@Override
 	public void action(String[] args, MessageReceivedEvent event)
 	{
-		TextChannel channel = event.getTextChannel();
+		MessageChannel channel = event.getChannel();
 		String msg = event.getMessage().getContentDisplay();
 		String[] splitMsg = msg.split(" ", 2);
 
