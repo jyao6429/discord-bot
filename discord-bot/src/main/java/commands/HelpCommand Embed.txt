@@ -1,0 +1,72 @@
+{
+  "content": "Here you go!",
+  "embed": {
+    "title": "!help",
+    "description": "This thing",
+    "color": 4285679,
+    "footer": {
+      "text": "Made by jyao6429"
+    },
+    "thumbnail": {
+      "url": "https://cdn.discordapp.com/embed/avatars/0.png"
+    },
+    "author": {
+      "name": "Bot Commands",
+      "icon_url": "https://cdn.discordapp.com/embed/avatars/0.png"
+    },
+    "fields": [
+      {
+        "name": "!ping",
+        "value": "Ping-pong!"
+      },
+      {
+        "name": "!roll",
+        "value": "Roll a die"
+      },
+      {
+        "name": "!kick @mention",
+        "value": "Kick someone (Mods only)"
+      },
+      {
+        "name": "!play [URL] (or) [search query]",
+        "value": "Play music in the voice channel you are in (defaults to the Music channel if you are not in one) by giving a URL or keywords for the bot to search on YouTube\n*(URL supports: Youtube, SoundCloud, BandCamp, Vimeo, Twitch)*"
+      },
+      {
+        "name": "!skip",
+        "value": "Skips the current song if enough votes are given"
+      },
+      {
+        "name": "!pause",
+        "value": "Pauses music that is playing"
+      },
+      {
+        "name": "!resume",
+        "value": "Resumes music that is paused"
+      },
+      {
+        "name": "!stop",
+        "value": "Stops the music and disconnects the bot (Mods only)"
+      },
+      {
+        "name": "!startpoll",
+        "value": "Starts a new poll (Mods only) (Only one running poll per server)"
+      },
+      {
+        "name": "!endpoll or !stoppoll",
+        "value": "Stops the current running poll and displays the results"
+      },
+      {
+        "name": "!vote [yes or no]",
+        "value": "Vote in a running poll"
+      },
+      {
+        "name": "!lmgtfy [search query]",
+        "value": "Returns a LMGTFY link with the search parameter because we are lazy"
+      },
+      {
+        "name": "!block",
+        "value": "I have absolutely no idea"
+      }
+    ]
+  }
+}

@@ -36,7 +36,7 @@ public class Main
 	private JPanel mainPanel;
 	private JPanel sidePanel;
 	private static JTextArea text;
-	private static JDA jda;
+	public static JDA jda;
 	private DefaultCaret caret;
 	private JScrollPane scroller;
 
