@@ -29,18 +29,18 @@ public class PauseCommand implements Command
 	@Override
 	public void action(String[] args, MessageReceivedEvent event)
 	{
-		if(!event.isFromType(ChannelType.TEXT))
+		if (!event.isFromType(ChannelType.TEXT))
 		{
 			MessageChannel otherChannel = event.getChannel();
 			otherChannel.sendMessage("You must use this in a server!").queue();
 			return;
 		}
-		// Get all the channels
+		// Get all the channels amd information
 		TextChannel channel = event.getTextChannel();
 		Member member = event.getMember();
 		VoiceChannel myChannel = member.getVoiceState().getChannel();
-		
 		List<Member> connectedMembers = null;
+		
 		boolean isMod = ModTools.isMod(member);
 		int rounded = 0;
 

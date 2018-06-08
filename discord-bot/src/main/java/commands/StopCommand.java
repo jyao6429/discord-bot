@@ -23,7 +23,7 @@ public class StopCommand implements Command
 	@Override
 	public void action(String[] args, MessageReceivedEvent event)
 	{
-		if(!event.isFromType(ChannelType.TEXT))
+		if (!event.isFromType(ChannelType.TEXT))
 		{
 			MessageChannel otherChannel = event.getChannel();
 			otherChannel.sendMessage("You must use this in a server!").queue();
@@ -35,6 +35,7 @@ public class StopCommand implements Command
 		
 		// Makes sure user is a mod
 		boolean isMod = ModTools.isMod(member);
+		
 		if (isMod)
 		{
 			// Stops the music

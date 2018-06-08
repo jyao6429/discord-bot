@@ -32,7 +32,7 @@ public class KickCommand implements Command
 		Message message = event.getMessage();
 		Member sender = event.getMember();
 		
-		if(event.isFromType(ChannelType.PRIVATE))
+		if (event.isFromType(ChannelType.PRIVATE))
 		{
 			channel.sendMessage("Aren't you silly?").queue();
 			return;

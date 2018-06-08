@@ -25,7 +25,7 @@ public class VoteCommand implements Command
 	@Override
 	public void action(String[] args, MessageReceivedEvent event)
 	{
-		if(!event.isFromType(ChannelType.TEXT))
+		if (!event.isFromType(ChannelType.TEXT))
 		{
 			MessageChannel otherChannel = event.getChannel();
 			otherChannel.sendMessage("You must use this in a server!").queue();
@@ -33,10 +33,12 @@ public class VoteCommand implements Command
 		}
 		
 		String vote = "NO_VOTE";
+		
 		if (args.length != 0)	// Takes the first argument as the vote
 		{
 			vote = args[0];
 		}
+		
 		TextChannel channel = event.getTextChannel();
 		Member member = event.getMember();
 		
@@ -61,17 +63,16 @@ public class VoteCommand implements Command
 					channel.sendMessage("Please enter your vote after the command").queue();
 					return;
 				}
-				
 				try
 				{
-					int votes = pollStats.get(vote);
+					int votes = pollStats.get(vote);	// Increments the given vote, will throw error if the vote option doesn't exist
 					pollStats.put(vote, votes + 1);
 					votedMembers.add(member);
 					channel.sendMessage("Added a vote to: \"" + vote + "\"").queue();;
 				}
 				catch (Exception e)
 				{
-					channel.sendMessage("Invalid vote").queue();
+					channel.sendMessage("Invalid vote").queue();	// Tell user that option does not exist
 				}
 			}
 			else

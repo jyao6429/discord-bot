@@ -25,7 +25,7 @@ public class EndPollCommand implements Command
 	@Override
 	public void action(String[] args, MessageReceivedEvent event)
 	{
-		if(!event.isFromType(ChannelType.TEXT))
+		if (!event.isFromType(ChannelType.TEXT))
 		{
 			MessageChannel otherChannel = event.getChannel();
 			otherChannel.sendMessage("You must use this in a server!").queue();
@@ -37,12 +37,14 @@ public class EndPollCommand implements Command
 		
 		// First check if the user is a mod
 		boolean isMod = ModTools.isMod(member);
+		
 		if (isMod)
 		{
 			if (PollHandler.allPolls.containsKey(channel))	//Checks if there is a poll running
 			{
 				// Get the results
 				HashMap<String, Integer> results = PollHandler.allPolls.get(channel);
+				
 				// Send the results
 				String finalResults = "Poll Results:";
 				
@@ -51,6 +53,7 @@ public class EndPollCommand implements Command
 					finalResults += " {\"" + tempKey + "\": __**" + results.get(tempKey) + "**__}";
 				}
 				channel.sendMessage(finalResults).queue();
+				
 				// Reset the poll status for that text channel
 				PollHandler.allPolls.remove(channel);
 				PollHandler.hasVoted.remove(channel);

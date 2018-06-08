@@ -26,7 +26,7 @@ public class StartPollCommand implements Command
 	@Override
 	public void action(String[] args, MessageReceivedEvent event)
 	{
-		if(!event.isFromType(ChannelType.TEXT))
+		if (!event.isFromType(ChannelType.TEXT))
 		{
 			MessageChannel otherChannel = event.getChannel();
 			otherChannel.sendMessage("You must use this in a server!").queue();
@@ -38,11 +38,12 @@ public class StartPollCommand implements Command
 		
 		// Checks if user is a mod
 		boolean isMod = ModTools.isMod(member);
+		
 		if (isMod)
 		{
-			HashMap<String, Integer> pollStats = new HashMap<>();
+			HashMap<String, Integer> pollStats = new HashMap<>();	// Keeps the options for voting and the value of each
 			
-			if (args.length != 0 && args[0].startsWith("{"))
+			if (args.length != 0 && args[0].startsWith("{"))		// Parse the first argument if given different voting options than just "yes" and "no"
 			{
 				String[] votes = args[0].substring(1, args[0].length() - 1).split(",");
 				
@@ -52,11 +53,13 @@ public class StartPollCommand implements Command
 				}
 				
 			}
-			else
+			else		// If no argument is given, simply use "yes" and "no"
 			{
 				pollStats.put("yes", 0);
 				pollStats.put("no", 0);
 			}
+			
+			// Add everything to PollHandler so other commands can interact with it
 			PollHandler.allPolls.put(channel, pollStats);
 			PollHandler.hasVoted.put(channel, new ArrayList<Member>());
 			channel.sendMessage("Started poll").queue();
