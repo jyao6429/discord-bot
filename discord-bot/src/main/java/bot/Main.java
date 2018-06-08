@@ -182,7 +182,7 @@ public class Main
 	{
 		public void actionPerformed(ActionEvent ev)
 		{
-			logMessage("Bot Version: 1.1.6");
+			logMessage("Bot Version: 1.2.0");
 		}
 	}
 	public class ScrollButtonListener implements ActionListener // Send the scrollbar to the bottom when clicked
