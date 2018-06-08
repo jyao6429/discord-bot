@@ -1,11 +1,11 @@
 package commands;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+
 import bot.Command;
 import bot.ModTools;
 import bot.PollHandler;
 import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -32,7 +32,6 @@ public class EndPollCommand implements Command
 			return;
 		}
 		
-		Guild guild = event.getGuild();
 		Member member = event.getMember();
 		TextChannel channel = event.getTextChannel();
 		
@@ -40,20 +39,21 @@ public class EndPollCommand implements Command
 		boolean isMod = ModTools.isMod(member);
 		if (isMod)
 		{
-			if (PollHandler.isPolling.containsKey(guild) && PollHandler.isPolling.get(guild))	//Checks if there is a poll running
+			if (PollHandler.allPolls.containsKey(channel))	//Checks if there is a poll running
 			{
 				// Get the results
-				int[] pollResults = PollHandler.poll.get(guild);
-				int yesResults = pollResults[0];
-				int noResults = pollResults[1];
-
+				HashMap<String, Integer> results = PollHandler.allPolls.get(channel);
 				// Send the results
-				channel.sendMessage("Poll results: " + yesResults + " Yes, " + noResults + " No").queue();
+				String finalResults = "Poll Results:";
 				
-				// Reset the poll status for that guild
-				PollHandler.isPolling.put(guild, false);
-				PollHandler.hasVoted.put(guild, new ArrayList<Member>());
-				PollHandler.poll.put(guild, new int[2]);
+				for(String tempKey : results.keySet())
+				{
+					finalResults += " {\"" + tempKey + "\": __**" + results.get(tempKey) + "**__}";
+				}
+				channel.sendMessage(finalResults).queue();
+				// Reset the poll status for that text channel
+				PollHandler.allPolls.remove(channel);
+				PollHandler.hasVoted.remove(channel);
 			}
 			else
 			{
@@ -62,7 +62,7 @@ public class EndPollCommand implements Command
 		}
 		else
 		{
-			channel.sendMessage("Must be a mod to stop poll").queue();
+			channel.sendMessage("Must be a mod to stop the poll!").queue();
 		}
 	}
 

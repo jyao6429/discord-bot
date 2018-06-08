@@ -27,14 +27,18 @@ public class HelpCommand implements Command
 			    .addField("!ping", "Ping-pong!", false)
 			    .addField("!roll", "Roll a die", false)
 			    .addField("!kick @mention", "Kick someone (Mods only)", false)
-			    .addField("!play [URL] (or) [search query]", "Play music in the voice channel you are in (defaults to the Music channel if you are not in one) by giving a URL or keywords for the bot to search on YouTube\n*(URL supports: Youtube, SoundCloud, BandCamp, Vimeo, Twitch)*", false)
+			    .addField("!play [URL] (or) [search query]", "Play music in the voice channel you are in (defaults to the Music channel if you are not in one) by giving a URL or keywords for the bot to search on YouTube\n"
+			    		+ "*(URL supports: Youtube, SoundCloud, BandCamp, Vimeo, Twitch)*", false)
 			    .addField("!skip", "Skips the current song if enough votes are given", false)
 			    .addField("!pause", "Pauses music that is playing", false)
 			    .addField("!resume", "Resumes music that is paused", false)
 			    .addField("!stop", "Stops the music and disconnects the bot (Mods only)", false)
-			    .addField("!startpoll", "Starts a new poll (Mods only) (Only one running poll per server)", false)
-			    .addField("!endpoll or !stoppoll", "Stops the current running poll and displays the results", false)
-			    .addField("!vote [yes or no]", "Vote in a running poll", false)
+			    .addField("!startpoll {[option1],[option2],...}", "Starts a new poll given the different voting possibilities\n"
+			    		+ "*(The curly braces and commas are required, but the brackets are not)* ***DO NOT INCLUDE SPACES***"
+			    		+ "\nIf no arguments are given, the options are \"yes\" and \"no\"\n"
+			    		+ "(Mods only) (Only one running poll per text channel)", false)
+			    .addField("!endpoll or !stoppoll", "Stops the current poll in that text channel and displays the results", false)
+			    .addField("!vote [your vote]", "Vote in a running poll", false)
 			    .addField("!lmgtfy [search query]", "Returns a LMGTFY link with the search parameter because we are lazy", false)
 			    .addField("!block", "I have absolutely no idea", false)
 			    .build())

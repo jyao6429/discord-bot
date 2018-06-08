@@ -48,15 +48,18 @@
         "value": "Stops the music and disconnects the bot (Mods only)"
       },
       {
-        "name": "!startpoll",
-        "value": "Starts a new poll (Mods only) (Only one running poll per server)"
+        "name": "!startpoll {[option1],[option2]...}",
+        "value": "Starts a new poll given the different voting possibilities\n"
+			    		+ "*(The curly braces and commas are required, but the brackets are not)* ***DO NOT INCLUDE SPACES***"
+			    		+ "\nIf no arguments are given, the options are \"yes\" and \"no\"\n"
+			    		+ "(Mods only) (Only one running poll per text channel)""
       },
       {
         "name": "!endpoll or !stoppoll",
-        "value": "Stops the current running poll and displays the results"
+        "value": "Stops the current poll in that text channel and displays the results"
       },
       {
-        "name": "!vote [yes or no]",
+        "name": "!vote [your vote]",
         "value": "Vote in a running poll"
       },
       {
