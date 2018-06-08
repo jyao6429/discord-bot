@@ -3,19 +3,13 @@
 package bot;
 
 import net.dv8tion.jda.client.entities.Group;
-import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-public class BotListener extends ListenerAdapter
+class BotListener extends ListenerAdapter
 {
-	@Override
-	public void onMessageReceived(MessageReceivedEvent event)
+	@Override public void onMessageReceived(MessageReceivedEvent event)
 	{
 
 		// Event specific information
@@ -26,12 +20,12 @@ public class BotListener extends ListenerAdapter
 		// what you would see in the client.
 
 		boolean bot = author.isBot(); // This boolean is useful to determine if the User that
-										// sent the Message is a BOT or not!
-		if (msg.startsWith("!") && bot != true)		// Tell Main to handle the command
+		// sent the Message is a BOT or not!
+		if (msg.startsWith("!") && !bot)        // Tell Main to handle the command
 		{
 			Main.handleCommand(Main.parser.parse(event.getMessage().getContentDisplay().toLowerCase(), event));
 		}
-		
+
 		// Log all the messages in the Guilds in the GUI text box
 		if (event.isFromType(ChannelType.TEXT)) // If this message was sent to a Guild TextChannel
 		{
@@ -42,10 +36,10 @@ public class BotListener extends ListenerAdapter
 			// the message possibly not being from a Guild!
 
 			Guild guild = event.getGuild(); // The Guild that this message was sent in. (note, in the API, Guilds are
-											// Servers)
+			// Servers)
 			TextChannel textChannel = event.getTextChannel(); // The TextChannel that this message was sent to.
 			Member member = event.getMember(); // This Member that sent the message. Contains Guild specific information
-												// about the User!
+			// about the User!
 			try
 			{
 				String name;
@@ -79,7 +73,7 @@ public class BotListener extends ListenerAdapter
 			// only.
 			Group group = event.getGroup();
 			String groupName = group.getName() != null ? group.getName() : ""; // A group name can be null due to it
-																				// being unnamed.
+			// being unnamed.
 
 			String log = String.format("[GRP: %s]<%s>: %s\n", groupName, author.getName(), msg);
 			Main.logMessage(log);

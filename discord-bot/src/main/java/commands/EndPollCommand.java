@@ -1,7 +1,5 @@
 package commands;
 
-import java.util.HashMap;
-
 import bot.Command;
 import bot.ModTools;
 import bot.PollHandler;
@@ -11,19 +9,19 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.util.HashMap;
+
 public class EndPollCommand implements Command
 {
 
 	private final String HELP = "USAGE: !endpoll";
 
-	@Override
-	public boolean called(String[] args, MessageReceivedEvent event)
+	@Override public boolean called(String[] args, MessageReceivedEvent event)
 	{
 		return true;
 	}
 
-	@Override
-	public void action(String[] args, MessageReceivedEvent event)
+	@Override public void action(String[] args, MessageReceivedEvent event)
 	{
 		if (!event.isFromType(ChannelType.TEXT))
 		{
@@ -31,29 +29,29 @@ public class EndPollCommand implements Command
 			otherChannel.sendMessage("You must use this in a server!").queue();
 			return;
 		}
-		
+
 		Member member = event.getMember();
 		TextChannel channel = event.getTextChannel();
-		
+
 		// First check if the user is a mod
 		boolean isMod = ModTools.isMod(member);
-		
+
 		if (isMod)
 		{
-			if (PollHandler.allPolls.containsKey(channel))	//Checks if there is a poll running
+			if (PollHandler.allPolls.containsKey(channel))    //Checks if there is a poll running
 			{
 				// Get the results
 				HashMap<String, Integer> results = PollHandler.allPolls.get(channel);
-				
+
 				// Send the results
-				String finalResults = "Poll Results:";
-				
-				for(String tempKey : results.keySet())
+				StringBuilder finalResults = new StringBuilder("Poll Results:");
+
+				for (String tempKey : results.keySet())
 				{
-					finalResults += " {\"" + tempKey + "\": __**" + results.get(tempKey) + "**__}";
+					finalResults.append(" {\"").append(tempKey).append("\": __**").append(results.get(tempKey)).append("**__}");
 				}
-				channel.sendMessage(finalResults).queue();
-				
+				channel.sendMessage(finalResults.toString()).queue();
+
 				// Reset the poll status for that text channel
 				PollHandler.allPolls.remove(channel);
 				PollHandler.hasVoted.remove(channel);
@@ -69,15 +67,14 @@ public class EndPollCommand implements Command
 		}
 	}
 
-	@Override
-	public String help()
+	@Override public String help()
 	{
 		return HELP;
 	}
 
-	@Override
-	public void executed(boolean success, MessageReceivedEvent event)
+	@Override public void executed(boolean success, MessageReceivedEvent event)
 	{
+		//noinspection UnnecessaryReturnStatement
 		return;
 	}
 

@@ -1,23 +1,22 @@
 package commands;
 
-import java.net.URLEncoder;
 import bot.Command;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
+import java.net.URLEncoder;
 
 public class LMGTFYCommand implements Command
 {
 
 	private final String HELP = "USAGE: !lmgtfy";
 
-	@Override
-	public boolean called(String[] args, MessageReceivedEvent event)
+	@Override public boolean called(String[] args, MessageReceivedEvent event)
 	{
 		return true;
 	}
 
-	@Override
-	public void action(String[] args, MessageReceivedEvent event)
+	@Override public void action(String[] args, MessageReceivedEvent event)
 	{
 		MessageChannel channel = event.getChannel();
 		String msg = event.getMessage().getContentDisplay();
@@ -25,10 +24,10 @@ public class LMGTFYCommand implements Command
 
 		String url = splitMsg[1];
 		String encodedUrl;
-		try		// Get the message and encode it as a URL
+		try        // Get the message and encode it as a URL
 		{
 			encodedUrl = URLEncoder.encode(url, "UTF-8");
-			channel.sendMessage("http://lmgtfy.com/?q=" + encodedUrl).queue();	// Give the link back with argument as search query
+			channel.sendMessage("http://lmgtfy.com/?q=" + encodedUrl).queue();    // Give the link back with argument as search query
 		}
 		catch (Exception ex)
 		{
@@ -37,15 +36,14 @@ public class LMGTFYCommand implements Command
 		}
 	}
 
-	@Override
-	public String help()
+	@Override public String help()
 	{
 		return HELP;
 	}
 
-	@Override
-	public void executed(boolean success, MessageReceivedEvent event)
+	@Override public void executed(boolean success, MessageReceivedEvent event)
 	{
+		//noinspection UnnecessaryReturnStatement
 		return;
 	}
 

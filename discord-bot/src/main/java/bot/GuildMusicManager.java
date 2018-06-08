@@ -4,13 +4,12 @@ package bot;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
-
 import net.dv8tion.jda.core.entities.Guild;
 
 /**
  * Holder for both the player and a track scheduler for one guild.
  */
-public class GuildMusicManager
+class GuildMusicManager
 {
 	/**
 	 * Audio player for the guild.
@@ -22,11 +21,11 @@ public class GuildMusicManager
 	public final TrackScheduler scheduler;
 	/**
 	 * Creates a player and a track scheduler.
-	 * 
+	 *
 	 * @param manager
-	 *            Audio player manager to use for creating the player.
+	 * Audio player manager to use for creating the player.
 	 */
-	public final Guild guild;
+	private final Guild guild;
 	public GuildMusicManager(AudioPlayerManager manager, Guild guild)
 	{
 		player = manager.createPlayer();

@@ -1,8 +1,5 @@
 package commands;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import bot.Command;
 import bot.PollHandler;
 import net.dv8tion.jda.core.entities.ChannelType;
@@ -11,19 +8,20 @@ import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class VoteCommand implements Command
 {
 
 	private final String HELP = "USAGE: !vote";
 
-	@Override
-	public boolean called(String[] args, MessageReceivedEvent event)
+	@Override public boolean called(String[] args, MessageReceivedEvent event)
 	{
 		return true;
 	}
 
-	@Override
-	public void action(String[] args, MessageReceivedEvent event)
+	@Override public void action(String[] args, MessageReceivedEvent event)
 	{
 		if (!event.isFromType(ChannelType.TEXT))
 		{
@@ -31,26 +29,26 @@ public class VoteCommand implements Command
 			otherChannel.sendMessage("You must use this in a server!").queue();
 			return;
 		}
-		
+
 		String vote = "NO_VOTE";
-		
-		if (args.length != 0)	// Takes the first argument as the vote
+
+		if (args.length != 0)    // Takes the first argument as the vote
 		{
 			vote = args[0];
 		}
-		
+
 		TextChannel channel = event.getTextChannel();
 		Member member = event.getMember();
-		
-		if (PollHandler.allPolls.containsKey(channel))	// Checks if there is a poll rolling
+
+		if (PollHandler.allPolls.containsKey(channel))    // Checks if there is a poll rolling
 		{
 			// Gets current stats
 			HashMap<String, Integer> pollStats = PollHandler.allPolls.get(channel);
 			ArrayList<Member> votedMembers = PollHandler.hasVoted.get(channel);
-			
-			if (!votedMembers.contains(member))	// Makes sure user only votes once
+
+			if (!votedMembers.contains(member))    // Makes sure user only votes once
 			{
-				if (PollHandler.yes.contains(vote))	// Checks if the argument is "yes" or "no"
+				if (PollHandler.yes.contains(vote))    // Checks if the argument is "yes" or "no"
 				{
 					vote = "yes";
 				}
@@ -65,14 +63,14 @@ public class VoteCommand implements Command
 				}
 				try
 				{
-					int votes = pollStats.get(vote);	// Increments the given vote, will throw error if the vote option doesn't exist
+					int votes = pollStats.get(vote);    // Increments the given vote, will throw error if the vote option doesn't exist
 					pollStats.put(vote, votes + 1);
 					votedMembers.add(member);
-					channel.sendMessage("Added a vote to: \"" + vote + "\"").queue();;
+					channel.sendMessage("Added a vote to: \"" + vote + "\"").queue();
 				}
 				catch (Exception e)
 				{
-					channel.sendMessage("Invalid vote").queue();	// Tell user that option does not exist
+					channel.sendMessage("Invalid vote").queue();    // Tell user that option does not exist
 				}
 			}
 			else
@@ -86,14 +84,12 @@ public class VoteCommand implements Command
 		}
 	}
 
-	@Override
-	public String help()
+	@Override public String help()
 	{
 		return HELP;
 	}
 
-	@Override
-	public void executed(boolean success, MessageReceivedEvent event)
+	@Override public void executed(boolean success, MessageReceivedEvent event)
 	{
 		return;
 	}

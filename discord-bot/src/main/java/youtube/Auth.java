@@ -25,7 +25,7 @@ import java.util.List;
  * Shared class used by every sample. Contains methods for authorizing a user
  * and caching credentials.
  */
-public class Auth
+class Auth
 {
 
 	/**
@@ -47,10 +47,8 @@ public class Auth
 	/**
 	 * Authorizes the installed application to access user's protected data.
 	 *
-	 * @param scopes
-	 *            list of scopes needed to run youtube upload.
-	 * @param credentialDatastore
-	 *            name of the credential datastore to cache OAuth tokens
+	 * @param scopes              list of scopes needed to run youtube upload.
+	 * @param credentialDatastore name of the credential datastore to cache OAuth tokens
 	 */
 	public static Credential authorize(List<String> scopes, String credentialDatastore) throws IOException
 	{
@@ -60,23 +58,18 @@ public class Auth
 		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
 
 		// Checks that the defaults have been replaced (Default = "Enter X here").
-		if (clientSecrets.getDetails().getClientId().startsWith("Enter")
-				|| clientSecrets.getDetails().getClientSecret().startsWith("Enter "))
+		if (clientSecrets.getDetails().getClientId().startsWith("Enter") || clientSecrets.getDetails().getClientSecret().startsWith("Enter "))
 		{
-			System.out.println(
-					"Enter Client ID and Secret from https://console.developers.google.com/project/_/apiui/credential "
-							+ "into src/main/resources/client_secrets.json");
+			System.out.println("Enter Client ID and Secret from https://console.developers.google.com/project/_/apiui/credential " + "into src/main/resources/client_secrets.json");
 			System.exit(1);
 		}
 
 		// This creates the credentials datastore at
 		// ~/.oauth-credentials/${credentialDatastore}
-		FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(
-				new File(System.getProperty("user.home") + "/" + CREDENTIALS_DIRECTORY));
+		FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(System.getProperty("user.home") + "/" + CREDENTIALS_DIRECTORY));
 		DataStore<StoredCredential> datastore = fileDataStoreFactory.getDataStore(credentialDatastore);
 
-		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
-				clientSecrets, scopes).setCredentialDataStore(datastore).build();
+		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, scopes).setCredentialDataStore(datastore).build();
 
 		// Build the local server and bind it to port 8080
 		LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();

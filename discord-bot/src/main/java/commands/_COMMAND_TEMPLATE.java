@@ -3,7 +3,7 @@ package commands;
 import bot.Command;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
-public class _COMMAND_TEMPLATE implements Command
+@SuppressWarnings({ "ALL", "UnnecessaryReturnStatement" }) public class _COMMAND_TEMPLATE implements Command
 {
 
 	private final String HELP = "USAGE: ![COMMAND HERE]";
@@ -29,6 +29,7 @@ public class _COMMAND_TEMPLATE implements Command
 	@Override
 	public void executed(boolean success, MessageReceivedEvent event)
 	{
+		//noinspection UnnecessaryReturnStatement
 		return;
 	}
 }

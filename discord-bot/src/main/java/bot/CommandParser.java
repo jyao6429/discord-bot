@@ -1,39 +1,35 @@
 package bot;
 
-import java.util.ArrayList;
-
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class CommandParser
 {
 	public CommandContainer parse(String rw, MessageReceivedEvent e)
 	{
 		// Remove the "!" from the beginning of the command and split it into the arguments
-		ArrayList<String> split = new ArrayList<String>();
-		String raw = rw;
-		String beheaded = raw.replaceFirst("!", "");
+		ArrayList<String> split = new ArrayList<>();
+		String beheaded = rw.replaceFirst("!", "");
 		String[] splitBeheaded = beheaded.split(" ");
-		for (String s : splitBeheaded)
-		{
-			split.add(s);
-		}
+		Collections.addAll(split, splitBeheaded);
 		String invoke = split.get(0);
 		String[] args = new String[split.size() - 1];
 		split.subList(1, split.size()).toArray(args);
 
-		return new CommandContainer(raw, beheaded, splitBeheaded, invoke, args, e);
+		return new CommandContainer(rw, beheaded, splitBeheaded, invoke, args, e);
 	}
-	public class CommandContainer	// Class for holding the entirety of the command with arguments
+	public class CommandContainer    // Class for holding the entirety of the command with arguments
 	{
-		public final String raw;
-		public final String beheaded;
-		public final String[] splitBeheaded;
+		final String raw;
+		final String beheaded;
+		final String[] splitBeheaded;
 		public final String invoke;
 		public final String[] args;
 		public final MessageReceivedEvent event;
 
-		public CommandContainer(String rw, String beheaded, String[] splitBeheaded, String invoke, String[] args,
-				MessageReceivedEvent e)
+		CommandContainer(String rw, String beheaded, String[] splitBeheaded, String invoke, String[] args, MessageReceivedEvent e)
 		{
 			this.raw = rw;
 			this.beheaded = beheaded;

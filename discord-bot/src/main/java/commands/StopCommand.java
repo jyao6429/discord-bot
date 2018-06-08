@@ -14,14 +14,12 @@ public class StopCommand implements Command
 
 	private final String HELP = "USAGE: !stop";
 
-	@Override
-	public boolean called(String[] args, MessageReceivedEvent event)
+	@Override public boolean called(String[] args, MessageReceivedEvent event)
 	{
 		return true;
 	}
 
-	@Override
-	public void action(String[] args, MessageReceivedEvent event)
+	@Override public void action(String[] args, MessageReceivedEvent event)
 	{
 		if (!event.isFromType(ChannelType.TEXT))
 		{
@@ -29,13 +27,13 @@ public class StopCommand implements Command
 			otherChannel.sendMessage("You must use this in a server!").queue();
 			return;
 		}
-		
+
 		TextChannel channel = event.getTextChannel();
 		Member member = event.getMember();
-		
+
 		// Makes sure user is a mod
 		boolean isMod = ModTools.isMod(member);
-		
+
 		if (isMod)
 		{
 			// Stops the music
@@ -48,14 +46,12 @@ public class StopCommand implements Command
 		}
 	}
 
-	@Override
-	public String help()
+	@Override public String help()
 	{
 		return HELP;
 	}
 
-	@Override
-	public void executed(boolean success, MessageReceivedEvent event)
+	@Override public void executed(boolean success, MessageReceivedEvent event)
 	{
 		return;
 	}

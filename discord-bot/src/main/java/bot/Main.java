@@ -1,34 +1,19 @@
 package bot;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.text.DefaultCaret;
-
 import commands.*;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.entities.Game;
 import youtube.Search;
+
+import javax.swing.*;
+import javax.swing.text.DefaultCaret;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.HashMap;
 
 public class Main
 {
@@ -41,14 +26,13 @@ public class Main
 	private JScrollPane scroller;
 
 	public static final CommandParser parser = new CommandParser(); // Command stuff
-	public static HashMap<String, Command> commands = new HashMap<String, Command>();
+	private static HashMap<String, Command> commands = new HashMap<>();
 
 	public static void main(String[] args)
 	{
 		try
 		{
-			BufferedReader r = new BufferedReader(new FileReader("bot.key")); // Import the bot token from file on
-																				// computer named "bot.key"
+			BufferedReader r = new BufferedReader(new FileReader("bot.key")); // Import the bot token from file on computer named "bot.key"
 			String botToken = r.readLine(); // Set the string botToken as the token in the file
 			jda = new JDABuilder(AccountType.BOT) // Initialize the bot
 					.addEventListener(new BotListener()) // Adds the bot listener so it can respond when messages are sent
@@ -60,7 +44,7 @@ public class Main
 		}
 		catch (Exception ex)
 		{
-			ex.printStackTrace(); // Catch exceptions
+			ex.printStackTrace();
 		}
 		commands.put("ping", new PingCommand()); // Put all the commands into the HashMap,
 		commands.put("help", new HelpCommand()); // the key is the command that people call in the text channel,
@@ -87,7 +71,7 @@ public class Main
 	{
 		text.append(temp + "\n");
 	}
-	public void go() // Builds the GUI
+	private void go() // Builds the GUI
 	{
 		frame = new JFrame("Discord Bot Server"); // Sets the name
 
@@ -97,10 +81,8 @@ public class Main
 		text.setEditable(false); // Sets so that you can't edit the text in it
 
 		scroller = new JScrollPane(text); // New scroll pane, so that the text box can scroll
-		scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS); // Always have a vertical
-																							// scrollbar
-		scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); // Never have a horizontal
-																								// scrollbar
+		scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS); // Always have a vertical scrollbar
+		scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER); // Never have a horizontal scrollbar
 		caret = (DefaultCaret) text.getCaret(); // Initialize the DefaultCaret and set it so that it auto-scrolls down
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
@@ -127,12 +109,11 @@ public class Main
 
 		frame.getContentPane().add(BorderLayout.SOUTH, scrollDownButton); // Add the scrollDownButton to the bottom
 		frame.getContentPane().add(BorderLayout.EAST, sidePanel); // Add the sidePanel to the right
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Exits Java program if you close the window
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // Exits Java program if you close the window
 		frame.setSize(660, 340); // Set frame dimensions
 		frame.setVisible(true); // Make it visible
-
 	}
-	public class SaveButtonListener implements ActionListener // When Save button is clicked
+	class SaveButtonListener implements ActionListener // When Save button is clicked
 	{
 		public void actionPerformed(ActionEvent ev)
 		{
@@ -171,21 +152,21 @@ public class Main
 			}
 		}
 	}
-	public class ClearButtonListener implements ActionListener // Clears the text box when clicked
+	class ClearButtonListener implements ActionListener // Clears the text box when clicked
 	{
 		public void actionPerformed(ActionEvent ev)
 		{
 			text.setText("");
 		}
 	}
-	public class VersionButtonListener implements ActionListener // Tells the version of the bot when clicked
+	class VersionButtonListener implements ActionListener // Tells the version of the bot when clicked
 	{
 		public void actionPerformed(ActionEvent ev)
 		{
 			logMessage("Bot Version: 1.2.0");
 		}
 	}
-	public class ScrollButtonListener implements ActionListener // Send the scrollbar to the bottom when clicked
+	class ScrollButtonListener implements ActionListener // Send the scrollbar to the bottom when clicked
 	{
 		public void actionPerformed(ActionEvent ev)
 		{
@@ -194,9 +175,9 @@ public class Main
 			caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		}
 	}
-	public static void handleCommand(CommandParser.CommandContainer cmd)	// Handle the command when BotListener receives a message starting with an "!"
+	public static void handleCommand(CommandParser.CommandContainer cmd)    // Handle the command when BotListener receives a message starting with an "!"
 	{
-		if (commands.containsKey(cmd.invoke))	// Checks if it is a valid command
+		if (commands.containsKey(cmd.invoke))    // Checks if it is a valid command
 		{
 			boolean safe = commands.get(cmd.invoke).called(cmd.args, cmd.event);
 

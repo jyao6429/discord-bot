@@ -6,7 +6,6 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
-
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 
@@ -24,8 +23,7 @@ public class TrackScheduler extends AudioEventAdapter
 	private final Guild guild;
 
 	/**
-	 * @param player
-	 *            The audio player this scheduler uses
+	 * @param player The audio player this scheduler uses
 	 */
 	public TrackScheduler(AudioPlayer player, Guild guild)
 	{
@@ -36,8 +34,7 @@ public class TrackScheduler extends AudioEventAdapter
 	/**
 	 * Add the next track to queue or play right away if nothing is in the queue.
 	 *
-	 * @param track
-	 *            The track to play or add to queue.
+	 * @param track The track to play or add to queue.
 	 */
 	public void queue(AudioTrack track)
 	{
@@ -62,17 +59,15 @@ public class TrackScheduler extends AudioEventAdapter
 		// player.
 		player.startTrack(queue.poll(), false);
 	}
-	
-	@Override
-	public void onTrackStart(AudioPlayer player, AudioTrack track)
+
+	@Override public void onTrackStart(AudioPlayer player, AudioTrack track)
 	{
 		// Print the name of the song that starts playing in the #music channel
 		TextChannel channel = guild.getTextChannelsByName("music", true).get(0);
 		channel.sendMessage("Now playing: " + track.getInfo().title).queue();
 	}
-	
-	@Override
-	public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason)
+
+	@Override public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason)
 	{
 		// Only start the next track if the end reason is suitable for it (FINISHED or
 		// LOAD_FAILED)
@@ -81,16 +76,14 @@ public class TrackScheduler extends AudioEventAdapter
 			nextTrack();
 		}
 	}
-	
-	@Override
-	public void onPlayerPause(AudioPlayer player)	//Send a message when music is paused
+
+	@Override public void onPlayerPause(AudioPlayer player)    //Send a message when music is paused
 	{
 		TextChannel channel = guild.getTextChannelsByName("music", true).get(0);
 		channel.sendMessage("Music paused").queue();
 	}
-	
-	@Override
-	public void onPlayerResume(AudioPlayer player)	//Send a message when music is resumed
+
+	@Override public void onPlayerResume(AudioPlayer player)    //Send a message when music is resumed
 	{
 		TextChannel channel = guild.getTextChannelsByName("music", true).get(0);
 		channel.sendMessage("Music resumed").queue();

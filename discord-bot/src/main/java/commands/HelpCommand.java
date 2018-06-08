@@ -1,7 +1,5 @@
 package commands;
 
-import java.awt.Color;
-
 import bot.Command;
 import bot.Main;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -11,6 +9,8 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
+import java.awt.*;
 
 public class HelpCommand implements Command
 {
@@ -46,14 +46,12 @@ public class HelpCommand implements Command
 
 	private final String HELP = "USAGE: !help";
 
-	@Override
-	public boolean called(String[] args, MessageReceivedEvent event)
+	@Override public boolean called(String[] args, MessageReceivedEvent event)
 	{
 		return true;
 	}
 
-	@Override
-	public void action(String[] args, MessageReceivedEvent event)
+	@Override public void action(String[] args, MessageReceivedEvent event)
 	{
 		// Print all channel commands
 		User sender = event.getAuthor();
@@ -63,26 +61,24 @@ public class HelpCommand implements Command
 			TextChannel channel = event.getTextChannel();
 
 			sender.openPrivateChannel().queue(
-					(privateChannel) -> privateChannel.sendMessage(embedded).queue(										// Open a PrivateChannel and attempt to send the embedded message
+					(privateChannel) -> privateChannel.sendMessage(embedded).queue(        // Open a PrivateChannel and attempt to send the embedded message
 							(success) -> channel.sendMessage(sender.getAsMention() + " Sent to you in a DM!").queue(), 	// If it succeeds, then mention the user in the TextChannel that the info was sent in a PM
-							(failure) -> channel.sendMessage(embedded).queue()));										// If it fails (ie. user doesn't allow PMs), then just directly send the info in the TextChannel
+							(failure) -> channel.sendMessage(embedded)
+									.queue()));        // If it fails (ie. user doesn't allow PMs), then just directly send the info in the TextChannel
 		}
 		else if (event.isFromType(ChannelType.PRIVATE))
 		{
 			event.getPrivateChannel().sendMessage(embedded).queue();	// Same, except now it's if the command was sent in a PM, so no need for the success/failures
 		}
 	}
-	
-	@Override
-	public String help()
+
+	@Override public String help()
 	{
 		return HELP;
 	}
 
-	@Override
-	public void executed(boolean success, MessageReceivedEvent event)
+	@Override public void executed(boolean success, MessageReceivedEvent event)
 	{
 		return;
 	}
-
 }
