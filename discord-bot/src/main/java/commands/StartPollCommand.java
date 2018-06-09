@@ -39,7 +39,7 @@ public class StartPollCommand implements Command
 
 		if (isMod)
 		{
-			if (PollHandler.allPolls.containsKey(channel))
+			if (PollHandler.allPolls.containsKey(channel))		// Checks if there is already a poll running
 			{
 				channel.sendMessage("Already a poll running").queue();
 				return;
