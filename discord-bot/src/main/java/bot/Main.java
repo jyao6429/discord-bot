@@ -17,6 +17,8 @@ import java.util.HashMap;
 
 public class Main
 {
+	private static final String BOT_VERSION = "1.2.1";
+
 	private JFrame frame; // GUI instance variables
 	private JPanel mainPanel;
 	private JPanel sidePanel;
@@ -163,7 +165,7 @@ public class Main
 	{
 		public void actionPerformed(ActionEvent ev)
 		{
-			logMessage("Bot Version: 1.2.0");
+			logMessage("Bot Version: " + BOT_VERSION);
 		}
 	}
 	class ScrollButtonListener implements ActionListener // Send the scrollbar to the bottom when clicked
