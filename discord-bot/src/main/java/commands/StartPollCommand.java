@@ -39,6 +39,11 @@ public class StartPollCommand implements Command
 
 		if (isMod)
 		{
+			if (PollHandler.allPolls.containsKey(channel))
+			{
+				channel.sendMessage("Already a poll running").queue();
+				return;
+			}
 			HashMap<String, Integer> pollStats = new HashMap<>();    // Keeps the options for voting and the value of each
 
 			if (args.length != 0 && args[0].startsWith("{"))        // Parse the first argument if given different voting options than just "yes" and "no"
