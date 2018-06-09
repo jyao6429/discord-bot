@@ -110,22 +110,37 @@ public class MusicController
 	public static void stopPlaying(TextChannel channel)		// Reset everything and disconnect
 	{
 		Guild guild = channel.getGuild();
-		GuildMusicManager musicManager = getGuildAudioPlayer(guild);
-		musicManager.scheduler.clearQueue();
-		guild.getAudioManager().closeAudioConnection();
+		if (guild.getAudioManager().isConnected())			// Checks if bot is connected first
+		{
+			GuildMusicManager musicManager = getGuildAudioPlayer(guild);
+			musicManager.scheduler.clearQueue();
+			guild.getAudioManager().closeAudioConnection();
+			channel.sendMessage("Stopped music").queue();
+		}
+		else
+		{
+			channel.sendMessage("Already stopped").queue();
+		}
 	}
 	public static void resume(TextChannel channel)        // Resume music that was paused
 	{
 		GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
 		boolean isPaused = musicManager.player.isPaused();
 
-		if (isPaused)
+		if (musicManager.scheduler.getIsPlaying())		// Checks if it is playing
 		{
-			musicManager.player.setPaused(false);
+			if (isPaused)		// Checks if it is paused
+			{
+				musicManager.player.setPaused(false);
+			}
+			else
+			{
+				channel.sendMessage("Already playing").queue();
+			}
 		}
 		else
 		{
-			channel.sendMessage("Already playing").queue();
+			channel.sendMessage("Nothing to resume").queue();
 		}
 	}
 	public static void pause(TextChannel channel)        // Pause music that was playing
@@ -133,13 +148,20 @@ public class MusicController
 		GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
 		boolean isPaused = musicManager.player.isPaused();
 
-		if (!isPaused)
+		if (musicManager.scheduler.getIsPlaying())		// Checks if it is playing
 		{
-			musicManager.player.setPaused(true);
+			if (!isPaused)        // Checks if it is resumed
+			{
+				musicManager.player.setPaused(true);
+			}
+			else
+			{
+				channel.sendMessage("Already paused").queue();
+			}
 		}
 		else
 		{
-			channel.sendMessage("Already paused").queue();
+			channel.sendMessage("Nothing to pause").queue();
 		}
 	}
 }

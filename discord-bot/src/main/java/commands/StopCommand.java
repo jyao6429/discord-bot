@@ -38,7 +38,6 @@ public class StopCommand implements Command
 		{
 			// Stops the music
 			MusicController.stopPlaying(channel);
-			channel.sendMessage("Stopped music").queue();
 		}
 		else
 		{

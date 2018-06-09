@@ -21,6 +21,7 @@ public class TrackScheduler extends AudioEventAdapter
 	private final AudioPlayer player;
 	private final BlockingQueue<AudioTrack> queue;
 	private final Guild guild;
+	private boolean isPlaying = false;
 
 	/**
 	 * @param player The audio player this scheduler uses
@@ -65,12 +66,14 @@ public class TrackScheduler extends AudioEventAdapter
 		// Print the name of the song that starts playing in the #music channel
 		TextChannel channel = guild.getTextChannelsByName("music", true).get(0);
 		channel.sendMessage("Now playing: " + track.getInfo().title).queue();
+		isPlaying = true;
 	}
 
 	@Override public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason)
 	{
 		// Only start the next track if the end reason is suitable for it (FINISHED or
 		// LOAD_FAILED)
+		isPlaying = false;
 		if (endReason.mayStartNext)
 		{
 			nextTrack();
@@ -92,5 +95,9 @@ public class TrackScheduler extends AudioEventAdapter
 	{
 		queue.clear();
 		player.startTrack(queue.poll(), false);
+	}
+	public boolean getIsPlaying()
+	{
+		return isPlaying;
 	}
 }
