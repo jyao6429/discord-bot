@@ -9,12 +9,13 @@ import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import net.dv8tion.jda.core.entities.Guild;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.VoiceChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.managers.AudioManager;
+import net.dv8tion.jda.api.audio.AudioSendHandler;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.managers.AudioManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class MusicController
 			musicManagers.put(guildId, musicManager);
 		}
 
-		guild.getAudioManager().setSendingHandler(musicManager.getSendHandler());
+		guild.getAudioManager().setSendingHandler((AudioSendHandler) musicManager.getSendHandler());
 
 		return musicManager;
 	}
@@ -61,6 +62,14 @@ public class MusicController
 
 			@Override public void playlistLoaded(AudioPlaylist playlist)    // Add a playlist the the queue
 			{
+				// Only add the first song if it was searched for
+				if (playlist.isSearchResult())
+				{
+					channel.sendMessage("Adding to queue: " + playlist.getTracks().get(0).getInfo().title).queue();    //Add the song to the queue
+
+					play(channel.getGuild(), musicManager, playlist.getTracks().get(0));
+					return;
+				}
 				channel.sendMessage("Adding playlist to queue: " + playlist.getName() + " (" + playlist.getTracks().size() + " songs)").queue();
 
 				for (AudioTrack track : playlist.getTracks())        // Add all the tracks
@@ -107,10 +116,10 @@ public class MusicController
 		channel.sendMessage("Skipped to next track").queue();
 		musicManager.scheduler.nextTrack();
 	}
-	public static void stopPlaying(TextChannel channel)		// Reset everything and disconnect
+	public static void stopPlaying(TextChannel channel)        // Reset everything and disconnect
 	{
 		Guild guild = channel.getGuild();
-		if (guild.getAudioManager().isConnected())			// Checks if bot is connected first
+		if (guild.getAudioManager().isConnected())            // Checks if bot is connected first
 		{
 			GuildMusicManager musicManager = getGuildAudioPlayer(guild);
 			musicManager.scheduler.clearQueue();
@@ -127,9 +136,9 @@ public class MusicController
 		GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
 		boolean isPaused = musicManager.player.isPaused();
 
-		if (musicManager.scheduler.getIsPlaying())		// Checks if it is playing
+		if (musicManager.scheduler.getIsPlaying())        // Checks if it is playing
 		{
-			if (isPaused)		// Checks if it is paused
+			if (isPaused)        // Checks if it is paused
 			{
 				musicManager.player.setPaused(false);
 			}
@@ -148,7 +157,7 @@ public class MusicController
 		GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
 		boolean isPaused = musicManager.player.isPaused();
 
-		if (musicManager.scheduler.getIsPlaying())		// Checks if it is playing
+		if (musicManager.scheduler.getIsPlaying())        // Checks if it is playing
 		{
 			if (!isPaused)        // Checks if it is resumed
 			{

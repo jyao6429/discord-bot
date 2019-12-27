@@ -1,10 +1,11 @@
 package commands;
 
 import bot.Command;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class LMGTFYCommand implements Command
 {
@@ -26,7 +27,7 @@ public class LMGTFYCommand implements Command
 		String encodedUrl;
 		try        // Get the message and encode it as a URL
 		{
-			encodedUrl = URLEncoder.encode(url, "UTF-8");
+			encodedUrl = URLEncoder.encode(url, StandardCharsets.UTF_8);
 			channel.sendMessage("http://lmgtfy.com/?q=" + encodedUrl).queue();    // Give the link back with argument as search query
 		}
 		catch (Exception ex)

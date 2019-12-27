@@ -1,11 +1,14 @@
 package bot;
 
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public interface Command
 {
 	boolean called(String[] args, MessageReceivedEvent event);
+
 	void action(String[] args, MessageReceivedEvent event);
+
 	String help();
+
 	void executed(boolean success, MessageReceivedEvent event);
 }

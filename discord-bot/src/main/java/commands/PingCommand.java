@@ -1,7 +1,7 @@
 package commands;
 
 import bot.Command;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class PingCommand implements Command
 {

@@ -2,13 +2,10 @@ package commands;
 
 import bot.Command;
 import bot.MusicController;
-import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import youtube.Search;
-
-import java.util.Objects;
+import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class PlayCommand implements Command
 {
@@ -48,19 +45,9 @@ public class PlayCommand implements Command
 			{
 				searchTerms.append(temp).append(" ");
 			}
-			String videoID = Search.searchVideo(searchTerms.toString());
-			String youtubeURL = "https://www.youtube.com/watch?v=";
+			String youtubeSearch = "ytsearch:" + searchTerms;
 
-			if (!Objects.equals(videoID, "NONE"))
-			{
-				youtubeURL += videoID;
-				MusicController.loadAndPlay(channel, youtubeURL, event);
-			}
-			else
-			{
-				channel.sendMessage("Unable to search for a video").queue();
-			}
-
+			MusicController.loadAndPlay(channel, youtubeSearch, event);
 		}
 	}
 

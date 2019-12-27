@@ -1,6 +1,6 @@
 package bot;
 
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,12 +22,12 @@ public class CommandParser
 	}
 	public class CommandContainer    // Class for holding the entirety of the command with arguments
 	{
-		final String raw;
-		final String beheaded;
-		final String[] splitBeheaded;
 		public final String invoke;
 		public final String[] args;
 		public final MessageReceivedEvent event;
+		final String raw;
+		final String beheaded;
+		final String[] splitBeheaded;
 
 		CommandContainer(String rw, String beheaded, String[] splitBeheaded, String invoke, String[] args, MessageReceivedEvent e)
 		{

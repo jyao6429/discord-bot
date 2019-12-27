@@ -1,11 +1,10 @@
 package bot;
 
 import commands.*;
-import net.dv8tion.jda.core.AccountType;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.JDABuilder;
-import net.dv8tion.jda.core.entities.Game;
-import youtube.Search;
+import net.dv8tion.jda.api.AccountType;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
@@ -17,19 +16,16 @@ import java.util.HashMap;
 
 public class Main
 {
-	private static final String BOT_VERSION = "1.2.1";
-
+	public static final CommandParser parser = new CommandParser(); // Command stuff
+	private static final String BOT_VERSION = "1.2.2";
+	public static JDA jda;
+	private static JTextArea text;
+	private static HashMap<String, Command> commands = new HashMap<>();
 	private JFrame frame; // GUI instance variables
 	private JPanel mainPanel;
 	private JPanel sidePanel;
-	private static JTextArea text;
-	public static JDA jda;
 	private DefaultCaret caret;
 	private JScrollPane scroller;
-
-	public static final CommandParser parser = new CommandParser(); // Command stuff
-	private static HashMap<String, Command> commands = new HashMap<>();
-
 	public static void main(String[] args)
 	{
 		try
@@ -37,10 +33,10 @@ public class Main
 			BufferedReader r = new BufferedReader(new FileReader("bot.key")); // Import the bot token from file on computer named "bot.key"
 			String botToken = r.readLine(); // Set the string botToken as the token in the file
 			jda = new JDABuilder(AccountType.BOT) // Initialize the bot
-					.addEventListener(new BotListener()) // Adds the bot listener so it can respond when messages are sent
-					.setGame(Game.playing("!help")) // Set the "game" that the bot will display as what it is "playing"
+					.addEventListeners(new BotListener()) // Adds the bot listener so it can respond when messages are sent
+					.setActivity(Activity.playing("!help")) // Set the "game" that the bot will display as what it is "playing"
 					.setToken(botToken) // Set the bot token
-					.buildBlocking();
+					.build();
 			jda.setAutoReconnect(true); // Set it to reconnect if disconnected from Internet
 			r.close();
 		}
@@ -67,11 +63,27 @@ public class Main
 		Main bot = new Main(); // Create a new Main object and call the go() method
 		bot.go();
 		MusicController.go(); // Call the static go() method for both classes
-		Search.go();
 	}
 	public static void logMessage(String temp) // Method to add text to the GUI text box
 	{
 		text.append(temp + "\n");
+	}
+	public static void handleCommand(CommandParser.CommandContainer cmd)    // Handle the command when BotListener receives a message starting with an "!"
+	{
+		if (commands.containsKey(cmd.invoke))    // Checks if it is a valid command
+		{
+			boolean safe = commands.get(cmd.invoke).called(cmd.args, cmd.event);
+
+			if (safe)
+			{
+				commands.get(cmd.invoke).action(cmd.args, cmd.event);
+				commands.get(cmd.invoke).executed(safe, cmd.event);
+			}
+			else
+			{
+				commands.get(cmd.invoke).executed(safe, cmd.event);
+			}
+		}
 	}
 	private void go() // Builds the GUI
 	{
@@ -175,23 +187,6 @@ public class Main
 			JScrollBar vertical = scroller.getVerticalScrollBar();
 			vertical.setValue(vertical.getMaximum());
 			caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		}
-	}
-	public static void handleCommand(CommandParser.CommandContainer cmd)    // Handle the command when BotListener receives a message starting with an "!"
-	{
-		if (commands.containsKey(cmd.invoke))    // Checks if it is a valid command
-		{
-			boolean safe = commands.get(cmd.invoke).called(cmd.args, cmd.event);
-
-			if (safe)
-			{
-				commands.get(cmd.invoke).action(cmd.args, cmd.event);
-				commands.get(cmd.invoke).executed(safe, cmd.event);
-			}
-			else
-			{
-				commands.get(cmd.invoke).executed(safe, cmd.event);
-			}
 		}
 	}
 }

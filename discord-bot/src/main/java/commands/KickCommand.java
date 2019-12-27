@@ -4,10 +4,10 @@ package commands;
 
 import bot.Command;
 import bot.ModTools;
-import net.dv8tion.jda.core.Permission;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.exceptions.PermissionException;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.PermissionException;
 
 import java.util.List;
 
@@ -78,7 +78,7 @@ public class KickCommand implements Command
 					// Remember, due to the fact that we're using queue we will never have to deal
 					// with RateLimits.
 					// JDA will do it all for you so long as you are using queue!
-					guild.getController().kick(member).queue(success -> channel.sendMessage("Kicked " + member.getEffectiveName() + "! Cya!").queue(), error -> {
+					guild.kick(member).queue(success -> channel.sendMessage("Kicked " + member.getEffectiveName() + "! Cya!").queue(), error -> {
 						// The failure consumer provides a throwable. In this case we want to check for
 						// a PermissionException.
 						if (error instanceof PermissionException)

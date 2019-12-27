@@ -2,10 +2,9 @@
 
 package bot;
 
-import net.dv8tion.jda.client.entities.Group;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 class BotListener extends ListenerAdapter
 {
@@ -67,16 +66,18 @@ class BotListener extends ListenerAdapter
 			String log = String.format("[PRIV]<%s>: %s\n", author.getName(), msg);
 			Main.logMessage(log);
 		}
+		/*
 		else if (event.isFromType(ChannelType.GROUP)) // If this message was sent to a Group. This is CLIENT only!
 		{
 			// The message was sent in a Group. It should be noted that Groups are CLIENT
 			// only.
-			Group group = event.getGroup();
+			Invite.Group group = event.getGroup();
 			String groupName = group.getName() != null ? group.getName() : ""; // A group name can be null due to it
 			// being unnamed.
 
 			String log = String.format("[GRP: %s]<%s>: %s\n", groupName, author.getName(), msg);
 			Main.logMessage(log);
 		}
+		 */
 	}
 }
